@@ -55,7 +55,10 @@ if scripts_dir.exists():
         ET.SubElement(script, "script").text = script_text
         ET.SubElement(script, "command")
         ET.SubElement(script, "packageName").text = pkg_name
-        ET.SubElement(script, "eventHandlerList")
+        event_handlers = ET.SubElement(script, "eventHandlerList")
+        if script_path.stem == "Code":
+            ET.SubElement(event_handlers, "string").text = "sysLoadEvent"
+            ET.SubElement(event_handlers, "string").text = "sysInstall"
 
 # AliasPackage
 alias_package = ET.SubElement(root, "AliasPackage")

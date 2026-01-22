@@ -11,7 +11,23 @@ local function safeDestroy(container)
   if container.destroy then container:destroy() end
 end
 
+function DGRGUI.enableGroups()
+  if enablePackage then
+    enablePackage("DGRGUI")
+  end
+  if enableAliasGroup then
+    enableAliasGroup("DGRGUI")
+  end
+  if enableTriggerGroup then
+    enableTriggerGroup("DGRGUI")
+  end
+  if enableScriptGroup then
+    enableScriptGroup("DGRGUI")
+  end
+end
+
 function DGRGUI.start()
+  DGRGUI.enableGroups()
   if setBorderLeft then setBorderLeft(500) end
   if setBorderRight then setBorderRight(500) end
   if setBorderTop then setBorderTop(200) end
@@ -31,7 +47,12 @@ if registerAnonymousEventHandler then
 end
 
 DGRGUI.start()
-</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script><Script isActive="yes" isFolder="no"><name>README</name><script>--[[
+tempTimer(1, function()
+  if DGRGUI and DGRGUI.enableGroups then
+    DGRGUI.enableGroups()
+  end
+end)
+</script><command /><packageName>DGRGUI</packageName><eventHandlerList><string>sysLoadEvent</string><string>sysInstall</string></eventHandlerList></Script><Script isActive="yes" isFolder="no"><name>README</name><script>--[[
 DGR Mudlet GUI
 
 Base package with EMCO included.
@@ -119,7 +140,7 @@ end)
 tempTimer(3, afterInstall)
 </script><command /><packageName>DGRGUI</packageName><regex>^gui install$</regex></Alias><Alias isActive="yes" isFolder="no"><name>gui uninstall</name><script>cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Uninstalling package...\n")
 uninstallPackage("DGRGUI")
-</script><command /><packageName>DGRGUI</packageName><regex>^gui uninstall$</regex></Alias><Alias isActive="yes" isFolder="no"><name>gui update</name><script>local currentVersion = "0.2.9"
+</script><command /><packageName>DGRGUI</packageName><regex>^gui uninstall$</regex></Alias><Alias isActive="yes" isFolder="no"><name>gui update</name><script>local currentVersion = "0.3.0"
 local repoUrl = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
 local packageUrl = repoUrl .. "/releases/latest/download/DGRGUI.mpackage"
 
@@ -224,7 +245,7 @@ tempTimer(0.5, function()
   installPackage(packageUrl)
 end)
 tempTimer(3, afterInstall)
-</script><command /><packageName>DGRGUI</packageName><regex>^gui restart$</regex></Alias><Alias isActive="yes" isFolder="no"><name>gui version</name><script>local version = "0.2.9"
+</script><command /><packageName>DGRGUI</packageName><regex>^gui restart$</regex></Alias><Alias isActive="yes" isFolder="no"><name>gui version</name><script>local version = "0.3.0"
 local repo = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
 
 cecho("&lt;green&gt;DGR GUI\n")

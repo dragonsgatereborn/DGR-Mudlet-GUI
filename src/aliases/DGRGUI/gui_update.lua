@@ -1,4 +1,4 @@
-local currentVersion = "0.2.9"
+local currentVersion = "0.3.0"
 local repoUrl = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
 local packageUrl = repoUrl .. "/releases/latest/download/@PKGNAME@.mpackage"
 
