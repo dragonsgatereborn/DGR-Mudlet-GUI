@@ -1,14 +1,27 @@
 local repoUrl = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
 local packageUrl = repoUrl .. "/releases/latest/download/@PKGNAME@.mpackage"
 
+local function enableGroups()
+  if enablePackage then
+    enablePackage("@PKGNAME@")
+  end
+  if enableAliasGroup then
+    enableAliasGroup("@PKGNAME@")
+  end
+  if enableTriggerGroup then
+    enableTriggerGroup("@PKGNAME@")
+  end
+  if enableScriptGroup then
+    enableScriptGroup("@PKGNAME@")
+  end
+end
+
 cecho("<green>DGR GUI: <reset>Installing from " .. repoUrl .. "\n")
 local installComplete = false
 local function afterInstall()
   if installComplete then return end
   installComplete = true
-  if enablePackage then
-    enablePackage("@PKGNAME@")
-  end
+  enableGroups()
   if reloadPackage then
     reloadPackage("@PKGNAME@")
     cecho("<green>DGR GUI: <reset>Package reloaded.\n")
