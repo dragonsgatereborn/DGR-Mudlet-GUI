@@ -24,7 +24,11 @@ build_dir.mkdir(parents=True)
 resources = src_dir / "resources"
 for item in resources.iterdir():
     if item.is_file():
-        shutil.copy2(item, build_dir / item.name)
+        if item.suffix.lower() == ".lua":
+            text = item.read_text(encoding="utf-8").replace("@PKGNAME@", pkg_name)
+            (build_dir / item.name).write_text(text, encoding="utf-8")
+        else:
+            shutil.copy2(item, build_dir / item.name)
 
 # Copy icon
 icon_path = resources / "computer.png"
@@ -75,12 +79,80 @@ for alias_def in aliases_json:
     ET.SubElement(alias, "packageName").text = pkg_name
     ET.SubElement(alias, "regex").text = regex
 
-# TriggerPackage (empty group)
+# TriggerPackage
 trigger_package = ET.SubElement(root, "TriggerPackage")
-trigger_group = ET.SubElement(trigger_package, "TriggerGroup", isActive="yes", isFolder="yes")
+trigger_group = ET.SubElement(
+    trigger_package,
+    "TriggerGroup",
+    isActive="yes",
+    isFolder="yes",
+    isTempTrigger="no",
+    isMultiline="no",
+    isPerlSlashGOption="no",
+    isColorizerTrigger="no",
+    isFilterTrigger="no",
+    isSoundTrigger="no",
+    isColorTrigger="no",
+    isColorTriggerFg="no",
+    isColorTriggerBg="no",
+)
 ET.SubElement(trigger_group, "name").text = pkg_name
 ET.SubElement(trigger_group, "script")
-ET.SubElement(trigger_group, "packageName")
+ET.SubElement(trigger_group, "triggerType").text = "0"
+ET.SubElement(trigger_group, "conditonLineDelta").text = "0"
+ET.SubElement(trigger_group, "mStayOpen").text = "0"
+ET.SubElement(trigger_group, "mCommand")
+ET.SubElement(trigger_group, "packageName").text = pkg_name
+ET.SubElement(trigger_group, "mFgColor").text = "#ff0000"
+ET.SubElement(trigger_group, "mBgColor").text = "#ffff00"
+ET.SubElement(trigger_group, "mSoundFile")
+ET.SubElement(trigger_group, "colorTriggerFgColor").text = "#000000"
+ET.SubElement(trigger_group, "colorTriggerBgColor").text = "#000000"
+ET.SubElement(trigger_group, "regexCodeList")
+ET.SubElement(trigger_group, "regexCodePropertyList")
+
+triggers_dir = src_dir / "triggers" / pkg_name
+triggers_json_path = triggers_dir / "triggers.json"
+if triggers_json_path.exists():
+    triggers_json = json.loads(triggers_json_path.read_text(encoding="utf-8"))
+    for trigger_def in triggers_json:
+        name = trigger_def["name"]
+        regex = trigger_def.get("regex", "")
+        script_path = triggers_dir / (name.replace(" ", "_") + ".lua")
+        script_text = script_path.read_text(encoding="utf-8").replace("@PKGNAME@", pkg_name)
+
+        trigger = ET.SubElement(
+            trigger_group,
+            "Trigger",
+            isActive="yes",
+            isFolder="no",
+            isTempTrigger="no",
+            isMultiline="no",
+            isPerlSlashGOption="no",
+            isColorizerTrigger="no",
+            isFilterTrigger="no",
+            isSoundTrigger="no",
+            isColorTrigger="no",
+            isColorTriggerFg="no",
+            isColorTriggerBg="no",
+        )
+        ET.SubElement(trigger, "name").text = name
+        ET.SubElement(trigger, "script").text = script_text
+        ET.SubElement(trigger, "triggerType").text = "0"
+        ET.SubElement(trigger, "conditonLineDelta").text = "0"
+        ET.SubElement(trigger, "mStayOpen").text = "0"
+        ET.SubElement(trigger, "mCommand")
+        ET.SubElement(trigger, "packageName").text = pkg_name
+        ET.SubElement(trigger, "mFgColor").text = "#ff0000"
+        ET.SubElement(trigger, "mBgColor").text = "#ffff00"
+        ET.SubElement(trigger, "mSoundFile")
+        ET.SubElement(trigger, "colorTriggerFgColor").text = "#000000"
+        ET.SubElement(trigger, "colorTriggerBgColor").text = "#000000"
+        regex_list = ET.SubElement(trigger, "regexCodeList")
+        regex_props = ET.SubElement(trigger, "regexCodePropertyList")
+        if regex:
+            ET.SubElement(regex_list, "string").text = regex
+            ET.SubElement(regex_props, "integer").text = "1"
 
 # Write XML
 xml_path = build_dir / f"{pkg_name}.xml"

@@ -1,5 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <MudletPackage version="1.001"><ScriptPackage><ScriptGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><eventHandlerList /><Script isActive="yes" isFolder="no"><name>Code</name><script>DGRGUI = DGRGUI or {}
+-- Load EMCO module from this package
+DGRGUI.emco = require("DGRGUI.emco")
+require("DGRGUI.EMCOChat")
 
 local function safeDestroy(container)
   if not container then return end
@@ -9,46 +12,49 @@ local function safeDestroy(container)
 end
 
 function DGRGUI.start()
-  safeDestroy(DGRGUI.mainContainer)
+  if setBorderLeft then setBorderLeft(500) end
+  if setBorderRight then setBorderRight(500) end
+  if setBorderTop then setBorderTop(200) end
+  if setBorderBottom then setBorderBottom(200) end
+end
 
-  DGRGUI.mainContainer = Geyser.Container:new({
-    name = "DGRGUI_Main",
-    x = 300,
-    y = 0,
-    width = "-600",
-    height = "100%",
-  })
-
-  DGRGUI.mainLabel = Geyser.Label:new({
-    name = "DGRGUI_MainLabel",
-    x = 0,
-    y = 0,
-    width = "100%",
-    height = "100%",
-  }, DGRGUI.mainContainer)
-
-  DGRGUI.mainLabel:setStyleSheet([[background-color: rgba(0,0,0,20%); border: 1px solid #3a3a3a;]])
+if registerAnonymousEventHandler then
+  if DGRGUI._resizeHandler then
+    killAnonymousEventHandler(DGRGUI._resizeHandler)
+  end
+  DGRGUI._resizeHandler = registerAnonymousEventHandler("sysWindowResizeEvent", function()
+    if setBorderLeft then setBorderLeft(500) end
+    if setBorderRight then setBorderRight(500) end
+    if setBorderTop then setBorderTop(200) end
+    if setBorderBottom then setBorderBottom(200) end
+  end)
 end
 
 DGRGUI.start()
 </script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script><Script isActive="yes" isFolder="no"><name>README</name><script>--[[
 DGR Mudlet GUI
 
-Base package with EMCO included (no GUI scripts yet).
+Base package with EMCO included.
 
 Author: WizzyDizzy
 Contributor: WizzyDizzy
 
 Install
+- lua uninstallPackage("DGRGUI")
 - lua installPackage("https://github.com/dragonsgatereborn/DGR-Mudlet-GUI/releases/latest/download/DGRGUI.mpackage")
 
 Commands
+- gui install
+- gui uninstall
 - gui update
 - gui restart
 - gui version
+- emco update
+- emco restart
+- emco version
 
 Layout
-- Main display area is centered with 300px margins on left/right
+- Main display area is centered with 500px left/right borders and 200px top/bottom borders
 
 Notes
 - Do not add or change anything inside DGRGUI package folders.
@@ -56,31 +62,498 @@ Notes
 
 EMCO
 - local emco = require("DGRGUI.emco")
+- DGRGUI.emco is initialized on startup
+- EMCO chatbox is initialized inside the right border
+- Default tabs: All, Program, OOC, RP, Whisper, Group, Game
+
+Example Triggers
+- Example triggers are included for each tab in the Trigger folder
 --]]
-</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script></ScriptGroup></ScriptPackage><AliasPackage><AliasGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><Alias isActive="yes" isFolder="no"><name>gui update</name><script>local currentVersion = "0.1.2"
+</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script></ScriptGroup></ScriptPackage><AliasPackage><AliasGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><Alias isActive="yes" isFolder="no"><name>gui install</name><script>local repoUrl = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
+local packageUrl = repoUrl .. "/releases/latest/download/DGRGUI.mpackage"
+
+cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Installing from " .. repoUrl .. "\n")
+local installComplete = false
+local function afterInstall()
+  if installComplete then return end
+  installComplete = true
+  if reloadPackage then
+    reloadPackage("DGRGUI")
+    cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Package reloaded.\n")
+  end
+  if DGRGUI and DGRGUI.start then
+    DGRGUI.start()
+  end
+end
+
+if registerAnonymousEventHandler then
+  local handler
+  handler = registerAnonymousEventHandler("sysInstall", function(_, pkg)
+    if pkg == "DGRGUI" then
+      killAnonymousEventHandler(handler)
+      tempTimer(0.5, afterInstall)
+    end
+  end)
+end
+
+uninstallPackage("DGRGUI")
+installPackage(packageUrl)
+tempTimer(2, afterInstall)
+</script><command /><packageName>DGRGUI</packageName><regex>^gui install$</regex></Alias><Alias isActive="yes" isFolder="no"><name>gui uninstall</name><script>cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Uninstalling package...\n")
+uninstallPackage("DGRGUI")
+</script><command /><packageName>DGRGUI</packageName><regex>^gui uninstall$</regex></Alias><Alias isActive="yes" isFolder="no"><name>gui update</name><script>local currentVersion = "0.2.6"
 local repoUrl = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
 local packageUrl = repoUrl .. "/releases/latest/download/DGRGUI.mpackage"
 
 cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Current version: " .. currentVersion .. "\n")
 cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Updating from " .. repoUrl .. "\n")
+cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Reinstalling package...\n")
+local installComplete = false
+local function afterInstall()
+  if installComplete then return end
+  installComplete = true
+  if reloadPackage then
+    reloadPackage("DGRGUI")
+    cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Package reloaded.\n")
+  end
+  if DGRGUI and DGRGUI.start then
+    DGRGUI.start()
+  end
+  cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Update complete (reinstalled latest).\n")
+end
+
+if registerAnonymousEventHandler then
+  local handler
+  handler = registerAnonymousEventHandler("sysInstall", function(_, pkg)
+    if pkg == "DGRGUI" then
+      killAnonymousEventHandler(handler)
+      tempTimer(0.5, afterInstall)
+    end
+  end)
+end
 
 uninstallPackage("DGRGUI")
 installPackage(packageUrl)
+tempTimer(2, afterInstall)
 
 cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Update complete! Package installed from:\n")
 cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;" .. packageUrl .. "\n")
-</script><command /><packageName>DGRGUI</packageName><regex>^gui update$</regex></Alias><Alias isActive="yes" isFolder="no"><name>gui restart</name><script>cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Restarting GUI...\n")
-if DGRGUI and DGRGUI.start then
-  DGRGUI.start()
-  cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Restart complete.\n")
-else
-  cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;No start() found yet. Nothing to restart.\n")
+</script><command /><packageName>DGRGUI</packageName><regex>^gui update$</regex></Alias><Alias isActive="yes" isFolder="no"><name>gui restart</name><script>local repoUrl = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
+local packageUrl = repoUrl .. "/releases/latest/download/DGRGUI.mpackage"
+
+cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Restarting GUI (reinstalling package)...\n")
+local installComplete = false
+local function afterInstall()
+  if installComplete then return end
+  installComplete = true
+  if reloadPackage then
+    reloadPackage("DGRGUI")
+  end
+  if DGRGUI and DGRGUI.start then
+    DGRGUI.start()
+    cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Restart complete.\n")
+  else
+    cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Restart complete (start() not available yet).\n")
+  end
 end
-</script><command /><packageName>DGRGUI</packageName><regex>^gui restart$</regex></Alias><Alias isActive="yes" isFolder="no"><name>gui version</name><script>local version = "0.1.2"
+
+if registerAnonymousEventHandler then
+  local handler
+  handler = registerAnonymousEventHandler("sysInstall", function(_, pkg)
+    if pkg == "DGRGUI" then
+      killAnonymousEventHandler(handler)
+      tempTimer(0.5, afterInstall)
+    end
+  end)
+end
+
+uninstallPackage("DGRGUI")
+installPackage(packageUrl)
+tempTimer(2, afterInstall)
+</script><command /><packageName>DGRGUI</packageName><regex>^gui restart$</regex></Alias><Alias isActive="yes" isFolder="no"><name>gui version</name><script>local version = "0.2.6"
 local repo = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
 
 cecho("&lt;green&gt;DGR GUI\n")
 cecho("&lt;green&gt;Version: &lt;yellow&gt;" .. version .. "\n")
 cecho("&lt;green&gt;Repository: &lt;cyan&gt;dragonsgatereborn/DGR-Mudlet-GUI\n")
 cecho("&lt;green&gt;GitHub: &lt;cyan&gt;" .. repo .. "\n")
-</script><command /><packageName>DGRGUI</packageName><regex>^gui version$</regex></Alias></AliasGroup></AliasPackage><TriggerPackage><TriggerGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName /></TriggerGroup></TriggerPackage></MudletPackage>
+</script><command /><packageName>DGRGUI</packageName><regex>^gui version$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco</name><script>local valid_options = {"font", "fontSize", "tabFontSize", "addFontSize", "blink", "blankLine", "timestamp", "save", "load", "show", "hide"}
+local valid_options_string = table.concat(valid_options, ", ")
+local option = matches[2]
+local value = matches[3]
+local lecho = wizzydizzy.helpers.echo
+if not table.contains(valid_options, option) then
+  lecho("Tried to change a config value that does not exist: valid options are " .. valid_options_string)
+  return
+end
+local chatEMCO = wizzydizzy.chat
+
+if option == "save" then
+  wizzydizzy.helpers.save()
+  lecho("Options saved")
+elseif option == "load" then
+  wizzydizzy.helpers.load()
+  lecho("Options loaded")
+elseif option == "show" then
+  wizzydizzy.container:show()
+elseif option == "hide" then
+  wizzydizzy.container:hide()
+else
+  if value == nil then
+    lecho("You need to provide a value when trying to configure things")
+    return
+  end
+  if option == "font" then
+    local validFont = table.contains(getAvailableFonts(), value)
+    if not validFont then
+      lecho("You tried to set the font to one that Mudlet doesn't recognize. This will not do.")
+    else
+      chatEMCO:setFont(value)
+    end
+  elseif table.contains({"blink", "blankLine", "timestamp"}, option) then
+    value = chatEMCO:fuzzyBoolean(value)
+    if value then
+      if option == "timestamp" then
+        chatEMCO:enableTimestamp()
+      elseif option == "blankLine" then
+        chatEMCO:enableBlankLine()
+      elseif option == "blink" then
+        chatEMCO:enableBlink()
+      elseif option == "commandLine" then
+        chatEMCO:enableCommandLine()
+      end
+    else
+      if option == "timestamp" then
+        chatEMCO:disableTimestamp()
+      elseif option == "blankLine" then
+        chatEMCO:disableBlankLine()
+      elseif option == "blink" then
+        chatEMCO:disableBlink()
+      elseif option == "commandLine" then
+        chatEMCO:disableCommandLine()
+      end
+    end
+  elseif option == "tabFontSize" or option == "addFontSize" then
+    value = tonumber(value)
+    if value then
+      chatEMCO:setTabFontSize(value)
+      lecho("Tab font size set to " .. value)
+    else
+      lecho("You tried to set the tabFontSize to a nonnumber. Attempted: " .. matches[3])
+    end
+  else
+    value = tonumber(value)
+    if value then
+      chatEMCO:setFontSize(value)
+    else
+      lecho("You tried to set the fontSize to a nonnumber. Attempted: " .. matches[3])
+    end
+  end
+end
+</script><command /><packageName>DGRGUI</packageName><regex>^emco (save|load|font|fontSize|tabFontSize|addFontSize|blink|blankLine|timestamp|show|hide)(?: (.+))?$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco gag</name><script>local success = wizzydizzy.chat:addGag(matches[2])
+local echo = wizzydizzy.helpers.echo
+if success then
+  echo(f"Successfully added '{matches[2]}' as a gag pattern")
+  return
+end
+echo(f"Unable to add '{matches[2]}' as a gag pattern, this is usually because it's already added.")</script><command /><packageName>DGRGUI</packageName><regex>^emco gag (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco ungag</name><script>local success = wizzydizzy.chat:removeGag(matches[2])
+local echo = wizzydizzy.helpers.echo
+if success then
+  echo(f"Successfully removed '{matches[2]}' as a gag pattern")
+  return
+end
+echo(f"Unable to remove '{matches[2]}' as a gag pattern, this is usually because it hasn't been set.")</script><command /><packageName>DGRGUI</packageName><regex>^emco ungag (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco gaglist</name><script>local lecho = wizzydizzy.helpers.echo
+local gaggedLines = table.keys(wizzydizzy.chat.gags)
+table.sort(gaggedLines)
+
+lecho("&lt;orange&gt;Gagging report. Remember these are Lua patterns, not regex")
+lecho()
+lecho("&lt;orange&gt;Gagged lines")
+for _,pattern in ipairs(gaggedLines) do
+  lecho("  &lt;purple&gt;" .. pattern)
+end
+</script><command /><packageName>DGRGUI</packageName><regex>^emco gaglist$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco notify</name><script>local tabName = matches[2]:title()
+local echo = wizzydizzy.helpers.echo
+local ok = wizzydizzy.chat:addNotifyTab(tabName)
+
+if ok then
+  echo(f"Enabled OS notifications for tab {tabName}")
+elseif ok == false then
+  echo(f"Tab {tabName} already had notifications enabled!")
+else
+  echo(f"Tab {tabName} does not exist")
+end</script><command /><packageName>DGRGUI</packageName><regex>^emco notify (.*)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco unnotify</name><script>local tabName = matches[2]:title()
+local echo = wizzydizzy.helpers.echo
+local ok = wizzydizzy.chat:removeNotifyTab(tabName)
+
+if ok then
+  echo(f"Disabled OS notifications for tab {tabName}")
+elseif ok == false then
+  echo(f"Tab {tabName} already had notifications disabled!")
+else
+  echo(f"Tab {tabName} does not exist")
+end</script><command /><packageName>DGRGUI</packageName><regex>^emco unnotify (.*)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco addtab</name><script>local tabName = matches[2]
+local pos = tonumber(matches[3])
+local echo = wizzydizzy.helpers.echo
+local chatEMCO = wizzydizzy.chat
+
+if table.contains(chatEMCO.consoles, tabName) then
+  echo(f"{tabName} already exists!")
+  return
+end
+chatEMCO:addTab(tabName, pos)</script><command /><packageName>DGRGUI</packageName><regex>^emco addtab (\w+)( \d+)?$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco remtab</name><script>local tabName = matches[2]
+local echo = wizzydizzy.helpers.echo
+local chatEMCO = wizzydizzy.chat
+local tabList = chatEMCO.consoles
+if not table.contains(tabList, tabName) then
+  echo(f"{tabName} does not exist to remove. Current tabs are: {table.concat(tabList, ', '}")
+  return
+end
+chatEMCO:removeTab(tabName)</script><command /><packageName>DGRGUI</packageName><regex>^emco remtab (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco color</name><script>local echo = wizzydizzy.helpers.echo
+local ok, err = wizzydizzy.helpers.setConfig(matches[2], matches[3])
+
+if not ok then
+  echo(err)
+  return
+end
+echo(f"Set color for {matches[2]} to {matches[3]}")</script><command /><packageName>DGRGUI</packageName><regex>^emco color (\w+) (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco color usage</name><script>local echo = wizzydizzy.helpers.echo
+local validOptions = table.keys(wizzydizzy.config)
+table.sort(validOptions)
+local validOptionsString = table.concat(validOptions, ", ")
+echo("Usage information for changing emco colors")
+echo()
+echo("emco color &lt;option&gt; &lt;color&gt;")
+echo("Color can be anything you would use in CSS, such as 'rgb(128,128,128)', '#888888', or 'grey'")
+echo("examples:")
+echo("  * emco color activeBorder goldenrod")
+echo("    * changes the border around the active tab to goldenrod")
+echo("  * emco color activeColor #00ff00")
+echo("    * changes the color of the active tab to green")
+echo()
+echo("Valid options are " .. validOptionsString)
+echo("Remember to use 'emco save' to make your changes permanent, or 'emco load' to undo them and reset back to what you previously saved.")</script><command /><packageName>DGRGUI</packageName><regex>^emco color$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco usage</name><script>local echo = wizzydizzy.helpers.echo
+local aliases = {
+  ["emco save"] = "saves your config to disk",
+  ["emco load"] = "loads your config from disk",
+  ["emco addtab &lt;tabname&gt;"] = "adds a tab to your EMCO",
+  ["emco remtab &lt;tabname&gt;"] = "removes a tab from your EMCO",
+  ["emco fontSize"] = "set the font size for the consoles",
+  ["emco tabFontSize"] = "set the font size for the tabs",
+  ["emco addFontSize"] = "alias for tabFontSize",
+  ["emco font"] = "set the font to use for the consoles",
+  ["emco blink &lt;true|false&gt;"] = "turn blinking on/off",
+  ["emco blankLine &lt;true|false&gt;"] = "turn inserting a blank line between messages on/off",
+  ["emco timestamp &lt;true|false&gt;"] = "turn timestamps on/off",
+  ["emco show"] = "show the EMCO",
+  ["emco hide"] = "hide the EMCO",
+  ["emco gaglist"] = "prints out the list of gag patterns",
+  ["emco gag &lt;pattern&gt;"] = "add a gag pattern",
+  ["emco ungag &lt;pattern&gt;"] = "remove a gag pattern",
+  ["emco notify &lt;tabName&gt;"] = "turn on OS notifications for tabName",
+  ["emco unnotify &lt;tabName&gt;"] = "turn off OS notifications for tabName",
+  ["emco color &lt;option&gt; &lt;value&gt;"] = "used to change the colors for the active/inactive tab, and the background color for the consoles. 'emco color' with no options will print out available options",
+  ["emco version"] = "display the current EMCO version and repository information",
+  ["emco update"] = "(re)install the latest version of the package",
+  ["emco install"] = "install the latest package from GitHub",
+  ["emco uninstall"] = "uninstall the DGRGUI package",
+  ["emco restart"] = "restart the EMCO chat window and reload defaults",
+}
+
+echo("\nAvailable aliases for the prebuilt EMCO package")
+echo()
+for name, desc in spairs(aliases) do
+  echo(f"* {name}")
+  echo(f"  * {desc}")
+end
+</script><command /><packageName>DGRGUI</packageName><regex>^emco( usage)?$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco update</name><script>local currentVersion = "2.15.16"
+local repoUrl = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
+local apiUrl = "https://api.github.com/repos/dragonsgatereborn/EMCO/releases/latest"
+local packageUrl = repoUrl .. "/releases/latest/download/DGRGUI.mpackage"
+
+local function installLatest(latestTag)
+  uninstallPackage("DGRGUI")
+  installPackage(packageUrl)
+  cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Update complete! Package installed from:\n")
+  cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;" .. packageUrl .. "\n")
+end
+
+cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Current version: " .. currentVersion .. "\n")
+cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Updating from " .. repoUrl .. "\n")
+cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Fetching latest version...\n")
+
+if getHTTP then
+  local completed = false
+  tempTimer(8, function()
+    if not completed then
+      completed = true
+      cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Latest version: unknown (timed out). Installing latest.\n")
+      installLatest("")
+    end
+  end)
+  getHTTP(apiUrl, {}, function(body, code)
+    if completed then return end
+    completed = true
+    if code and tonumber(code) ~= 200 then
+      cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Latest version: unknown (HTTP " .. tostring(code) .. "). Installing latest.\n")
+      installLatest("")
+      return
+    end
+    local tag = body and body:match('"tag_name"%s*:%s*"([^"]+)"') or ""
+    if tag == "" then
+      cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Latest version: unknown (invalid response). Installing latest.\n")
+      installLatest("")
+      return
+    end
+    cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Latest version: " .. tag .. "\n")
+    local currentTag = currentVersion
+    if tag == currentTag or tag == ("v" .. currentTag) then
+      cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Already up to date.\n")
+      return
+    end
+    cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Updating to " .. tag .. "\n")
+    installLatest(tag)
+  end)
+else
+  cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Latest version: unknown (getHTTP unavailable). Installing latest.\n")
+  installLatest("")
+end
+</script><command /><packageName>DGRGUI</packageName><regex>^emco update$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco install</name><script>local repoUrl = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
+local packageUrl = repoUrl .. "/releases/latest/download/DGRGUI.mpackage"
+
+cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Installing from " .. repoUrl .. "\n")
+installPackage(packageUrl)
+</script><command /><packageName>DGRGUI</packageName><regex>^emco install$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco uninstall</name><script>cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Uninstalling package...\n")
+uninstallPackage("DGRGUI")
+</script><command /><packageName>DGRGUI</packageName><regex>^emco uninstall$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco restart</name><script>local echo = wizzydizzy.helpers.echo
+
+if wizzydizzy.container then
+  if wizzydizzy.container.hide then
+    wizzydizzy.container:hide()
+  end
+  if wizzydizzy.container.close then
+    wizzydizzy.container:close()
+  end
+  if wizzydizzy.container.destroy then
+    wizzydizzy.container:destroy()
+  end
+end
+
+wizzydizzy.container = nil
+wizzydizzy.chat = nil
+collectgarbage("collect")
+
+wizzydizzy.helpers.resetToDefaults()
+echo("Restarted EMCO chat window.")
+</script><command /><packageName>DGRGUI</packageName><regex>^emco restart$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco version</name><script>local version = "2.15.16"
+local repo = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
+
+cecho("&lt;green&gt;EMCO Chat Package\n")
+cecho("&lt;green&gt;Version: &lt;yellow&gt;" .. version .. "\n")
+cecho("&lt;green&gt;Repository: &lt;cyan&gt;dragonsgatereborn/DGR-Mudlet-GUI\n")
+cecho("&lt;green&gt;GitHub: &lt;cyan&gt;" .. repo .. "\n")
+cecho("&lt;white&gt;Use &lt;green&gt;emco update&lt;white&gt; to check for updates.\n")
+</script><command /><packageName>DGRGUI</packageName><regex>^emco version$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco title</name><script>local title = matches[2]
+if title == "clear" then
+  title = ""
+end
+wizzydizzy.container:setTitle(title)</script><command /><packageName>DGRGUI</packageName><regex>^emco title (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco lock</name><script>wizzydizzy.container:lockContainer()</script><command /><packageName>DGRGUI</packageName><regex>^emco lock$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco unlock</name><script>wizzydizzy.container:unlockContainer()</script><command /><packageName>DGRGUI</packageName><regex>^emco unlock$</regex></Alias><Alias isActive="yes" isFolder="no"><name>README</name><script>--[[
+EMCO Chat Package README
+
+Author: WizzyDizzy
+Contributor: WizzyDizzy
+
+Important
+- Do not add or change anything inside the DGRGUI package folders.
+- EMCO updates overwrite package contents and will delete custom changes.
+- Put your custom triggers/aliases/scripts outside DGRGUI, or in a separate custom package.
+
+Install
+- lua uninstallPackage("DGRGUI")
+- lua installPackage("https://github.com/dragonsgatereborn/DGR-Mudlet-GUI/releases/latest/download/DGRGUI.mpackage")
+- emco update (updates from GitHub)
+
+GUI Aliases
+- gui install
+- gui uninstall
+- gui update
+- gui restart
+- gui version
+
+Aliases
+- emco addtab &lt;tabname&gt;
+- emco blankLine &lt;true|false&gt;
+- emco blink &lt;true|false&gt;
+- emco color &lt;option&gt; &lt;value&gt;
+- emco font &lt;fontname&gt;
+- emco fontSize &lt;size&gt;
+- emco tabFontSize &lt;size&gt;
+- emco addFontSize &lt;size&gt;
+- emco gag &lt;pattern&gt;
+- emco gaglist
+- emco hide
+- emco load
+- emco lock
+- emco notify &lt;tabName&gt;
+- emco remtab &lt;tabname&gt;
+- emco save
+- emco show
+- emco timestamp &lt;true|false&gt;
+- emco title &lt;new title&gt;
+- emco unlock
+- emco ungag &lt;pattern&gt;
+- emco unnotify &lt;tabName&gt;
+- emco update
+- emco install
+- emco uninstall
+- emco restart
+- emco version
+
+Repository
+- https://github.com/dragonsgatereborn/DGR-Mudlet-GUI
+--]]
+</script><command /><packageName>DGRGUI</packageName><regex>^__EMCO_README__$</regex></Alias></AliasGroup></AliasPackage><TriggerPackage><TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no"><name>DGRGUI</name><script /><triggerType>0</triggerType><conditonLineDelta>0</conditonLineDelta><mStayOpen>0</mStayOpen><mCommand /><packageName>DGRGUI</packageName><mFgColor>#ff0000</mFgColor><mBgColor>#ffff00</mBgColor><mSoundFile /><colorTriggerFgColor>#000000</colorTriggerFgColor><colorTriggerBgColor>#000000</colorTriggerBgColor><regexCodeList /><regexCodePropertyList /><Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no"><name>README</name><script>--[[
+DGR GUI Trigger Examples (EMCO)
+
+Author: WizzyDizzy
+Contributor: WizzyDizzy
+
+Important
+- Do not add or change anything inside the DGRGUI package folders.
+- Put your custom triggers in a separate package or outside DGRGUI.
+
+Default EMCO Tabs
+- All
+- Program
+- OOC
+- RP
+- Whisper
+- Group
+- Game
+
+Trigger Examples
+- Each example trigger matches a simple tag like [OOC] or [WHISPER].
+- Update the regex patterns to match your game's output.
+- Copy these triggers into your own package for customization.
+--]]
+</script><triggerType>0</triggerType><conditonLineDelta>0</conditonLineDelta><mStayOpen>0</mStayOpen><mCommand /><packageName>DGRGUI</packageName><mFgColor>#ff0000</mFgColor><mBgColor>#ffff00</mBgColor><mSoundFile /><colorTriggerFgColor>#000000</colorTriggerFgColor><colorTriggerBgColor>#000000</colorTriggerBgColor><regexCodeList><string>^__DGRGUI_TRIGGERS_README__$</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger><Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no"><name>EMCO Example - All</name><script>if wizzydizzy and wizzydizzy.chat then
+  wizzydizzy.chat:append("All")
+end
+</script><triggerType>0</triggerType><conditonLineDelta>0</conditonLineDelta><mStayOpen>0</mStayOpen><mCommand /><packageName>DGRGUI</packageName><mFgColor>#ff0000</mFgColor><mBgColor>#ffff00</mBgColor><mSoundFile /><colorTriggerFgColor>#000000</colorTriggerFgColor><colorTriggerBgColor>#000000</colorTriggerBgColor><regexCodeList><string>^\[ALL\]</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger><Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no"><name>EMCO Example - Program</name><script>if wizzydizzy and wizzydizzy.chat then
+  wizzydizzy.chat:append("Program")
+end
+</script><triggerType>0</triggerType><conditonLineDelta>0</conditonLineDelta><mStayOpen>0</mStayOpen><mCommand /><packageName>DGRGUI</packageName><mFgColor>#ff0000</mFgColor><mBgColor>#ffff00</mBgColor><mSoundFile /><colorTriggerFgColor>#000000</colorTriggerFgColor><colorTriggerBgColor>#000000</colorTriggerBgColor><regexCodeList><string>^\[PROGRAM\]</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger><Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no"><name>EMCO Example - OOC</name><script>if wizzydizzy and wizzydizzy.chat then
+  wizzydizzy.chat:append("OOC")
+end
+</script><triggerType>0</triggerType><conditonLineDelta>0</conditonLineDelta><mStayOpen>0</mStayOpen><mCommand /><packageName>DGRGUI</packageName><mFgColor>#ff0000</mFgColor><mBgColor>#ffff00</mBgColor><mSoundFile /><colorTriggerFgColor>#000000</colorTriggerFgColor><colorTriggerBgColor>#000000</colorTriggerBgColor><regexCodeList><string>^\[OOC\]</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger><Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no"><name>EMCO Example - RP</name><script>if wizzydizzy and wizzydizzy.chat then
+  wizzydizzy.chat:append("RP")
+end
+</script><triggerType>0</triggerType><conditonLineDelta>0</conditonLineDelta><mStayOpen>0</mStayOpen><mCommand /><packageName>DGRGUI</packageName><mFgColor>#ff0000</mFgColor><mBgColor>#ffff00</mBgColor><mSoundFile /><colorTriggerFgColor>#000000</colorTriggerFgColor><colorTriggerBgColor>#000000</colorTriggerBgColor><regexCodeList><string>^\[RP\]</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger><Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no"><name>EMCO Example - Whisper</name><script>if wizzydizzy and wizzydizzy.chat then
+  wizzydizzy.chat:append("Whisper")
+end
+</script><triggerType>0</triggerType><conditonLineDelta>0</conditonLineDelta><mStayOpen>0</mStayOpen><mCommand /><packageName>DGRGUI</packageName><mFgColor>#ff0000</mFgColor><mBgColor>#ffff00</mBgColor><mSoundFile /><colorTriggerFgColor>#000000</colorTriggerFgColor><colorTriggerBgColor>#000000</colorTriggerBgColor><regexCodeList><string>^\[WHISPER\]</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger><Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no"><name>EMCO Example - Group</name><script>if wizzydizzy and wizzydizzy.chat then
+  wizzydizzy.chat:append("Group")
+end
+</script><triggerType>0</triggerType><conditonLineDelta>0</conditonLineDelta><mStayOpen>0</mStayOpen><mCommand /><packageName>DGRGUI</packageName><mFgColor>#ff0000</mFgColor><mBgColor>#ffff00</mBgColor><mSoundFile /><colorTriggerFgColor>#000000</colorTriggerFgColor><colorTriggerBgColor>#000000</colorTriggerBgColor><regexCodeList><string>^\[GROUP\]</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger><Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no"><name>EMCO Example - Game</name><script>if wizzydizzy and wizzydizzy.chat then
+  wizzydizzy.chat:append("Game")
+end
+</script><triggerType>0</triggerType><conditonLineDelta>0</conditonLineDelta><mStayOpen>0</mStayOpen><mCommand /><packageName>DGRGUI</packageName><mFgColor>#ff0000</mFgColor><mBgColor>#ffff00</mBgColor><mSoundFile /><colorTriggerFgColor>#000000</colorTriggerFgColor><colorTriggerBgColor>#000000</colorTriggerBgColor><regexCodeList><string>^\[GAME\]</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger></TriggerGroup></TriggerPackage></MudletPackage>

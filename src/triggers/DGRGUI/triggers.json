@@ -1,0 +1,34 @@
+[
+  {
+    "name": "README",
+    "regex": "^__DGRGUI_TRIGGERS_README__$"
+  },
+  {
+    "name": "EMCO Example - All",
+    "regex": "^\\[ALL\\]"
+  },
+  {
+    "name": "EMCO Example - Program",
+    "regex": "^\\[PROGRAM\\]"
+  },
+  {
+    "name": "EMCO Example - OOC",
+    "regex": "^\\[OOC\\]"
+  },
+  {
+    "name": "EMCO Example - RP",
+    "regex": "^\\[RP\\]"
+  },
+  {
+    "name": "EMCO Example - Whisper",
+    "regex": "^\\[WHISPER\\]"
+  },
+  {
+    "name": "EMCO Example - Group",
+    "regex": "^\\[GROUP\\]"
+  },
+  {
+    "name": "EMCO Example - Game",
+    "regex": "^\\[GAME\\]"
+  }
+]

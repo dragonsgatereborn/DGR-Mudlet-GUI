@@ -1,6 +1,6 @@
 -- EMCO Chatbox for DGR GUI (right border)
 local defaultConfig = {activeColor = "black", inactiveColor = "black", activeBorder = "green", activeText = "green", inactiveText = "grey", background = "black", windowBorder = "green", title = "green"}
-local emco = require("@PKGNAME@.emco")
+local emco = require("DGRGUI.emco")
 
 emco.cmdLineStyleSheet = nil
 wizzydizzy = wizzydizzy or {}
