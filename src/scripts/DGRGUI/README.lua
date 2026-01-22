@@ -3,7 +3,7 @@ DGR Mudlet GUI
 
 Base package with EMCO included (no GUI scripts yet).
 
-Author: Demonnic
+Author: WizzyDizzy
 Contributor: WizzyDizzy
 
 Install

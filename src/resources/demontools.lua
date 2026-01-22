@@ -1,10 +1,10 @@
 --- Collection of miscellaneous functions and tools which don't necessarily warrant their own module/class
 -- @module demontools
--- @author Damian Monogue <demonnic@gmail.com>
+-- @author Damian Monogue <wizzydizzy@gmail.com>
 -- @copyright 2020 Damian Monogue
 -- @license MIT, see LICENSE.lua
 local DemonTools = {}
-local cheatConsole = Geyser.MiniConsole:new({name = "DemonnicCheatConsole", width = 4000, wrapWidth = 10000, color = "black"})
+local cheatConsole = Geyser.MiniConsole:new({name = "WizzyDizzyCheatConsole", width = 4000, wrapWidth = 10000, color = "black"})
 cheatConsole:hide()
 local function exists(path)
   path = path:gsub([[\$]], "")
@@ -824,7 +824,7 @@ end
 
 function string.tocolor(self)
   -- This next bit takes the string and 'unshuffles' it, breaking it into odds and evens
-  -- reverses the evens, then adds the odds to the new even set. So demonnic becomes cnoedmni
+  -- reverses the evens, then adds the odds to the new even set. So wizzydizzy becomes cnoedmni
   -- this makes sure that names which are similar in the beginning don't color the same
   -- especially since we have to cut the number for the random seed due to OSX using a default
   -- randomseed if you feed it something too large, which made every name longer than 7 characters
@@ -1218,7 +1218,7 @@ end
 
 --- Returns a color table {r,g,b} derived from str. Will return the same color every time for the same string.
 -- @tparam string str the string to turn into a color.
--- @usage   dt.string2color("Demonnic") --returns { 131, 122, 209 }
+-- @usage   dt.string2color("WizzyDizzy") --returns { 131, 122, 209 }
 function DemonTools.string2color(str)
   return string.tocolor(str)
 end
@@ -1227,7 +1227,7 @@ end
 -- @tparam string strForColor the string to turn into a color using DemonTools.string2color
 -- @tparam string strToColor the string you want to color based on strForColor
 -- @param format What format to use for the color portion. "d" for decho, "c" for cecho, or "h" for hecho. Defaults to "d"
--- @usage   dt.colorMunge("Demonnic", "Test") --returns "<131,122,209>Test"
+-- @usage   dt.colorMunge("WizzyDizzy", "Test") --returns "<131,122,209>Test"
 function DemonTools.colorMunge(strForColor, strToColor, format)
   return colorMunge(strForColor, strToColor, format)
 end

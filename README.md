@@ -4,7 +4,7 @@ Base Mudlet GUI package for Dragons Gate Reborn.
 
 This package includes the EMCO core (emco.lua + dependencies) but no chatbox scripts/aliases/triggers yet. We will build the GUI on top of this repository.
 
-Author: Demonnic  
+Author: WizzyDizzy  
 Contributor: WizzyDizzy
 
 ## Install
