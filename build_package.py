@@ -81,6 +81,10 @@ for alias_def in aliases_json:
     ET.SubElement(alias, "command")
     ET.SubElement(alias, "packageName")
     ET.SubElement(alias, "regex").text = regex
+    regex_list = ET.SubElement(alias, "regexCodeList")
+    regex_props = ET.SubElement(alias, "regexCodePropertyList")
+    ET.SubElement(regex_list, "string").text = regex
+    ET.SubElement(regex_props, "integer").text = "1"
 
 # TriggerPackage
 trigger_package = ET.SubElement(root, "TriggerPackage")
