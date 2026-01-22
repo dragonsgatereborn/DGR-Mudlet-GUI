@@ -23,4 +23,5 @@ Notes
 
 EMCO
 - local emco = require("DGRGUI.emco")
+- DGRGUI.emco is initialized on startup
 --]]

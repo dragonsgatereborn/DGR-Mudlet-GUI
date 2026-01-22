@@ -1,4 +1,6 @@
 DGRGUI = DGRGUI or {}
+-- Load EMCO module from this package
+DGRGUI.emco = require("DGRGUI.emco")
 
 local function safeDestroy(container)
   if not container then return end
