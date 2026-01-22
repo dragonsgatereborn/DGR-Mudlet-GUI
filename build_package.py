@@ -47,7 +47,8 @@ if scripts_dir.exists():
     for script_path in sorted(scripts_dir.glob("*.lua")):
         script = ET.SubElement(script_group, "Script", isActive="yes", isFolder="no")
         ET.SubElement(script, "name").text = script_path.stem
-        ET.SubElement(script, "script").text = script_path.read_text(encoding="utf-8")
+        script_text = script_path.read_text(encoding="utf-8").replace("@PKGNAME@", pkg_name)
+        ET.SubElement(script, "script").text = script_text
         ET.SubElement(script, "command")
         ET.SubElement(script, "packageName").text = pkg_name
         ET.SubElement(script, "eventHandlerList")
