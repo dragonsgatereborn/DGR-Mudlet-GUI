@@ -3,7 +3,7 @@
 -- similar to Geyser so that you can a.) have multiple of them and b.) easily embed it
 -- into your existing UI as you would any other Geyser element.
 -- @classmod EMCO
--- @author Damian Monogue <wizzydizzy@gmail.com>
+-- @author Damian Monogue <demonnic@gmail.com>
 -- @copyright 2020 Damian Monogue
 -- @copyright 2021 Damian Monogue
 -- @license MIT, see LICENSE.lua
@@ -73,7 +73,7 @@ else
   debugc("EMCO tried to require loggingconsole but could not because: " .. content)
 end
 --- Creates a new Embeddable Multi Console Object.
--- <br>see https://github.com/wizzydizzy/EMCO/wiki for information on valid constraints and defaults
+-- <br>see https://github.com/demonnic/EMCO/wiki for information on valid constraints and defaults
 -- @tparam table cons table of constraints which configures the EMCO.
 -- <table class="tg">
 -- <thead>
@@ -479,17 +479,17 @@ end
 
 function EMCO:readYATCO()
   local config
-  if wizzydizzy and wizzydizzy.chat and wizzydizzy.chat.config then
-    config = wizzydizzy.chat.config
+  if demonnic and demonnic.chat and demonnic.chat.config then
+    config = demonnic.chat.config
   else
-    cecho("<white>(<blue>EMCO<white>)<reset> Could not find wizzydizzy.chat.config, nothing to convert\n")
+    cecho("<white>(<blue>EMCO<white>)<reset> Could not find demonnic.chat.config, nothing to convert\n")
     return
   end
   local constraints = "EMCO:new({\n"
-  constraints = string.format("%s  x = %d,\n", constraints, wizzydizzy.chat.container.get_x())
-  constraints = string.format("%s  y = %d,\n", constraints, wizzydizzy.chat.container.get_y())
-  constraints = string.format("%s  width = %d,\n", constraints, wizzydizzy.chat.container.get_width())
-  constraints = string.format("%s  height = %d,\n", constraints, wizzydizzy.chat.container.get_height())
+  constraints = string.format("%s  x = %d,\n", constraints, demonnic.chat.container.get_x())
+  constraints = string.format("%s  y = %d,\n", constraints, demonnic.chat.container.get_y())
+  constraints = string.format("%s  width = %d,\n", constraints, demonnic.chat.container.get_width())
+  constraints = string.format("%s  height = %d,\n", constraints, demonnic.chat.container.get_height())
   if config.timestamp then
     constraints = string.format("%s  timestamp = true,\n  timestampFormat = \"%s\",\n", constraints, config.timestamp)
   else
@@ -559,7 +559,7 @@ function EMCO:miniConvertYATCO()
 end
 
 --- Echos to the main console a script object you can add which will fully convert YATCO to EMCO.
--- This replaces the wizzydizzy.chat variable with a newly created EMCO object, so that the main
+-- This replaces the demonnic.chat variable with a newly created EMCO object, so that the main
 -- functions used to place information on the consoles (append(), cecho(), etc) should continue to
 -- work in the user's triggers and events.
 function EMCO:convertYATCO()
@@ -571,8 +571,8 @@ function EMCO:convertYATCO()
 
 
 -- Copy everything below this line until the next line starting with --
-wizzydizzy = wizzydizzy or {}
-wizzydizzy.chat = ]]
+demonnic = demonnic or {}
+demonnic.chat = ]]
   cecho(string.format("%s%s\n--- End script\n", header, invocation))
 end
 
@@ -695,7 +695,7 @@ end
 --- Cycles between the tabs in order
 -- @tparam boolean reverse Defaults to false. When true, moves backward through the tab list rather than forward.
 function EMCO:cycleTab(reverse)
-  -- add the property to wizzydizzy.chat
+  -- add the property to demonnic.chat
   local consoles = self.consoles
   local cycleIndex = table.index_of(consoles, self.currentTab)
 

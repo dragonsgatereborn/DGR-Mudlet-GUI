@@ -1,6 +1,6 @@
 --- MiniConsole with logging capabilities
 -- @classmod LoggingConsole
--- @author Damian Monogue <wizzydizzy@gmail.com>
+-- @author Damian Monogue <demonnic@gmail.com>
 -- @copyright 2020 Damian Monogue
 -- @license MIT, see LICENSE.lua
 local homedir = getMudletHomeDir():gsub("\\", "/")

@@ -1,8 +1,8 @@
 {
-  "package": "DGRGUI",
-  "version": "00.03.03",
-  "author": "WizzyDizzy",
-  "title": "DGR Mudlet GUI (EMCO base)",
+  "package": "EMCOChat",
+  "version": "2.15.16",
+  "author": "Demonnic",
+  "title": "Premade tabbed chat using EMCO",
   "icon": "computer.png",
   "outputFile": true
 }
