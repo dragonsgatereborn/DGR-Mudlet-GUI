@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<MudletPackage version="1.001"><ScriptPackage><ScriptGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><eventHandlerList /><Script isActive="yes" isFolder="no"><name>README</name><script>--[[
+<MudletPackage version="1.001"><ScriptPackage><Script isActive="yes" isFolder="no"><name>README</name><script>--[[
 DGRGUI Scripts
 
 This folder is the parent for DGRGUI scripts.
@@ -89,7 +89,58 @@ end
 
 -- Run once on load so base GUI state is applied
 DGRGUI.restart()
-</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script><ScriptGroup isActive="yes" isFolder="yes"><name>EMCO</name><script /><packageName>DGRGUI</packageName><Script isActive="yes" isFolder="no"><name>Code</name><script>--[[
+</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script><Script isActive="yes" isFolder="no"><name>EMCO_README</name><script>--[[
+EMCO Chat Package README
+
+Author: Demonnic
+Contributor: WizzyDizzy
+
+Important
+- Do not add or change anything inside the EMCOChat package folders.
+- EMCO updates overwrite package contents and will delete custom changes.
+- Put your custom triggers/aliases/scripts outside EMCOChat, or in a separate custom package.
+
+Installation
+- lua installPackage("https://github.com/dragonsgatereborn/EMCO/releases/latest/download/EMCOChat.mpackage")
+- emco update (updates from GitHub)
+
+Usage
+- demonnic.chat:append("TabName") to send lines to a tab
+- demonnic.chat:cecho("TabName", "message\n") for custom output
+
+Available aliases
+- emco addtab &lt;tabname&gt;
+- emco blankLine &lt;true|false&gt;
+- emco blink &lt;true|false&gt;
+- emco color &lt;option&gt; &lt;value&gt;
+- emco font &lt;fontname&gt;
+- emco fontSize &lt;size&gt;
+- emco tabFontSize &lt;size&gt;
+- emco addFontSize &lt;size&gt;
+- emco gag &lt;pattern&gt;
+- emco gaglist
+- emco hide
+- emco load
+- emco lock
+- emco notify &lt;tabName&gt;
+- emco remtab &lt;tabname&gt;
+- emco save
+- emco show
+- emco timestamp &lt;true|false&gt;
+- emco title &lt;new title&gt;
+- emco unlock
+- emco ungag &lt;pattern&gt;
+- emco unnotify &lt;tabName&gt;
+- emco update
+- emco install
+- emco uninstall
+- emco restart
+- emco version
+
+Repository
+- https://github.com/dragonsgatereborn/EMCO
+--]]
+</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script><Script isActive="yes" isFolder="no"><name>Code</name><script>--[[
 ========================================================
  EMCO CHAT WINDOW — AVAILABLE COMMANDS &amp; FEATURES
 ========================================================
@@ -188,6 +239,12 @@ emco version
 emco update
   (Re)installs or updates to the latest EMCO package version.
 
+emco install
+  Installs the latest EMCO package from GitHub.
+
+emco uninstall
+  Uninstalls the EMCOChat package.
+
 emco restart
   Restarts the EMCO chat window and reloads defaults.
 
@@ -211,20 +268,7 @@ Full API documentation:
 ]]--
 
 local defaultConfig = {activeColor = "black", inactiveColor = "black", activeBorder = "green", activeText = "green", inactiveText = "grey", background = "black", windowBorder = "green", title = "green"}
-local emco
-do
-  local ok, mod = pcall(require, "DGRGUI.emco")
-  if ok and mod then
-    emco = mod
-  else
-    ok, mod = pcall(require, "EMCOChat.emco")
-    if ok and mod then
-      emco = mod
-    else
-      emco = require("emco")
-    end
-  end
-end
+local emco = require("DGRGUI.emco")
 emco.cmdLineStyleSheet = nil
 demonnic = demonnic or {}
 demonnic.helpers = demonnic.helpers or {}
@@ -350,7 +394,7 @@ local function startup()
 end
 
 registerNamedEventHandler("demonnicEMCO", "EMCOprebuilt startup", "sysLoadEvent", startup)
-</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script></ScriptGroup></ScriptGroup></ScriptPackage><AliasPackage><AliasGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><Alias isActive="yes" isFolder="no"><name>README</name><script>--[[
+</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script></ScriptPackage><AliasPackage><Alias isActive="yes" isFolder="no"><name>README</name><script>--[[
 DGRGUI Aliases
 
 This folder is the parent for DGRGUI aliases.
@@ -368,7 +412,7 @@ else
     echo("DGRGUI: restart not available. Try reinstalling the package.\n")
   end
 end
-</script><command /><packageName>DGRGUI</packageName><regex>^dgrgui restart$</regex></Alias><AliasGroup isActive="yes" isFolder="yes"><name>EMCO</name><script /><packageName>DGRGUI</packageName><Alias isActive="yes" isFolder="no"><name>emco</name><script>local valid_options = {"font", "fontSize", "tabFontSize", "addFontSize", "blink", "blankLine", "timestamp", "save", "load", "show", "hide"}
+</script><command /><packageName>DGRGUI</packageName><regex>^dgrgui restart$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco</name><script>local valid_options = {"font", "fontSize", "tabFontSize", "addFontSize", "blink", "blankLine", "timestamp", "save", "load", "show", "hide"}
 local valid_options_string = table.concat(valid_options, ", ")
 local option = matches[2]
 local value = matches[3]
@@ -683,13 +727,13 @@ Aliases
 Repository
 - https://github.com/dragonsgatereborn/EMCO
 --]]
-</script><command /><packageName>DGRGUI</packageName><regex>^__EMCO_README__$</regex></Alias></AliasGroup></AliasGroup></AliasPackage><TriggerPackage><TriggerGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><Trigger isActive="yes" isFolder="no"><name>README</name><script>--[[
+</script><command /><packageName>DGRGUI</packageName><regex>^__EMCO_README__$</regex></Alias></AliasPackage><TriggerPackage><Trigger isActive="yes" isFolder="no"><name>README</name><script>--[[
 DGRGUI Triggers
 
 This folder is the parent for DGRGUI triggers.
 EMCO example triggers live in DGRGUI/EMCOCHAT.
 --]]
-</script><command /><packageName>DGRGUI</packageName><regexCodeList><string>^__DGRGUI_TRIGGERS_README__$</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger><TriggerGroup isActive="yes" isFolder="yes"><name>EMCOCHAT</name><script /><packageName>DGRGUI</packageName><Trigger isActive="yes" isFolder="no"><name>README</name><script>--[[
+</script><command /><packageName>DGRGUI</packageName><regexCodeList><string>^__DGRGUI_TRIGGERS_README__$</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger><Trigger isActive="yes" isFolder="no"><name>EMCO_TRIGGERS_README</name><script>--[[
 EMCO Chat Example Triggers
 
 These triggers are DISABLED by default and meant as copy/paste examples.
@@ -727,4 +771,4 @@ demonnic.chat:append("Group")
 -- Update the regex in triggers.json to match your game's output.
 
 demonnic.chat:append("Game")
-</script><command /><packageName>DGRGUI</packageName><regexCodeList><string>^\[GAME\].*</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger></TriggerGroup></TriggerGroup></TriggerPackage></MudletPackage>
+</script><command /><packageName>DGRGUI</packageName><regexCodeList><string>^\[GAME\].*</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger></TriggerPackage></MudletPackage>
