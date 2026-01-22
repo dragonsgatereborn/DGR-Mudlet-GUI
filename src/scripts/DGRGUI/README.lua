@@ -26,4 +26,5 @@ Notes
 EMCO
 - local emco = require("DGRGUI.emco")
 - DGRGUI.emco is initialized on startup
+- EMCO chatbox is initialized inside the right border
 --]]
