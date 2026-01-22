@@ -51,3 +51,10 @@ tempTimer(1, function()
     DGRGUI.enableGroups()
   end
 end)
+
+if reloadPackage and not _G.__DGRGUI_RELOADED then
+  _G.__DGRGUI_RELOADED = true
+  tempTimer(1.5, function()
+    reloadPackage("DGRGUI")
+  end)
+end

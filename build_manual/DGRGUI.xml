@@ -52,6 +52,13 @@ tempTimer(1, function()
     DGRGUI.enableGroups()
   end
 end)
+
+if reloadPackage and not _G.__DGRGUI_RELOADED then
+  _G.__DGRGUI_RELOADED = true
+  tempTimer(1.5, function()
+    reloadPackage("DGRGUI")
+  end)
+end
 </script><command /><packageName>DGRGUI</packageName><eventHandlerList><string>sysLoadEvent</string><string>sysInstall</string></eventHandlerList></Script><Script isActive="yes" isFolder="no"><name>README</name><script>--[[
 DGR Mudlet GUI
 
@@ -140,7 +147,7 @@ end)
 tempTimer(3, afterInstall)
 </script><command /><packageName /><regex>^gui install$</regex><regexCodeList><string>^gui install$</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Alias><Alias isActive="yes" isFolder="no"><name>gui uninstall</name><script>cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Uninstalling package...\n")
 uninstallPackage("DGRGUI")
-</script><command /><packageName /><regex>^gui uninstall$</regex><regexCodeList><string>^gui uninstall$</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Alias><Alias isActive="yes" isFolder="no"><name>gui update</name><script>local currentVersion = "00.03.02"
+</script><command /><packageName /><regex>^gui uninstall$</regex><regexCodeList><string>^gui uninstall$</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Alias><Alias isActive="yes" isFolder="no"><name>gui update</name><script>local currentVersion = "00.03.03"
 local repoUrl = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
 local packageUrl = repoUrl .. "/releases/latest/download/DGRGUI.mpackage"
 
@@ -245,7 +252,7 @@ tempTimer(0.5, function()
   installPackage(packageUrl)
 end)
 tempTimer(3, afterInstall)
-</script><command /><packageName /><regex>^gui restart$</regex><regexCodeList><string>^gui restart$</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Alias><Alias isActive="yes" isFolder="no"><name>gui version</name><script>local version = "00.03.02"
+</script><command /><packageName /><regex>^gui restart$</regex><regexCodeList><string>^gui restart$</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Alias><Alias isActive="yes" isFolder="no"><name>gui version</name><script>local version = "00.03.03"
 local repo = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
 
 cecho("&lt;green&gt;DGR GUI\n")
