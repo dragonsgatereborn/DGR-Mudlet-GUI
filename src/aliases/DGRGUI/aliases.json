@@ -1,0 +1,5 @@
+[
+  {"name": "gui update", "regex": "^gui update$"},
+  {"name": "gui restart", "regex": "^gui restart$"},
+  {"name": "gui version", "regex": "^gui version$"}
+]

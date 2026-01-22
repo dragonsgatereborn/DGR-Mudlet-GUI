@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<MudletPackage version="1.001"><ScriptPackage><ScriptGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><eventHandlerList /><Script isActive="yes" isFolder="no"><name>README</name><script>--[[
+DGR Mudlet GUI
+
+Base package with EMCO included (no GUI scripts yet).
+
+Author: Demonnic
+Contributor: WizzyDizzy
+
+Install
+- lua installPackage("https://github.com/dragonsgatereborn/DGR-Mudlet-GUI/releases/latest/download/DGRGUI.mpackage")
+
+Commands
+- gui update
+- gui restart
+- gui version
+
+Notes
+- Do not add or change anything inside DGRGUI package folders.
+- Updates overwrite package contents and remove local edits.
+
+EMCO
+- local emco = require("DGRGUI.emco")
+--]]
+</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script></ScriptGroup></ScriptPackage><AliasPackage><AliasGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><Alias isActive="yes" isFolder="no"><name>gui update</name><script>local currentVersion = "0.1.0"
+local repoUrl = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
+local packageUrl = repoUrl .. "/releases/latest/download/DGRGUI.mpackage"
+
+cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Current version: " .. currentVersion .. "\n")
+cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Updating from " .. repoUrl .. "\n")
+
+uninstallPackage("DGRGUI")
+installPackage(packageUrl)
+
+cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Update complete! Package installed from:\n")
+cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;" .. packageUrl .. "\n")
+</script><command /><packageName>DGRGUI</packageName><regex>^gui update$</regex></Alias><Alias isActive="yes" isFolder="no"><name>gui restart</name><script>cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Restarting GUI...\n")
+if DGRGUI and DGRGUI.start then
+  DGRGUI.start()
+  cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Restart complete.\n")
+else
+  cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;No start() found yet. Nothing to restart.\n")
+end
+</script><command /><packageName>DGRGUI</packageName><regex>^gui restart$</regex></Alias><Alias isActive="yes" isFolder="no"><name>gui version</name><script>local version = "0.1.0"
+local repo = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
+
+cecho("&lt;green&gt;DGR GUI\n")
+cecho("&lt;green&gt;Version: &lt;yellow&gt;" .. version .. "\n")
+cecho("&lt;green&gt;Repository: &lt;cyan&gt;dragonsgatereborn/DGR-Mudlet-GUI\n")
+cecho("&lt;green&gt;GitHub: &lt;cyan&gt;" .. repo .. "\n")
+</script><command /><packageName>DGRGUI</packageName><regex>^gui version$</regex></Alias></AliasGroup></AliasPackage><TriggerPackage><TriggerGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName /></TriggerGroup></TriggerPackage></MudletPackage>
