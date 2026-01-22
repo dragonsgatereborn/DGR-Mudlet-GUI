@@ -13,8 +13,8 @@ end
 function DGRGUI.start()
   if setBorderLeft then setBorderLeft(500) end
   if setBorderRight then setBorderRight(500) end
-  if setBorderTop then setBorderTop(300) end
-  if setBorderBottom then setBorderBottom(300) end
+  if setBorderTop then setBorderTop(200) end
+  if setBorderBottom then setBorderBottom(200) end
 end
 
 if registerAnonymousEventHandler then
@@ -24,8 +24,8 @@ if registerAnonymousEventHandler then
   DGRGUI._resizeHandler = registerAnonymousEventHandler("sysWindowResizeEvent", function()
     if setBorderLeft then setBorderLeft(500) end
     if setBorderRight then setBorderRight(500) end
-    if setBorderTop then setBorderTop(300) end
-    if setBorderBottom then setBorderBottom(300) end
+    if setBorderTop then setBorderTop(200) end
+    if setBorderBottom then setBorderBottom(200) end
   end)
 end
 
