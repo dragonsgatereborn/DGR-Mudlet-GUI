@@ -1,22 +1,22 @@
-mpackage = [[EMCOChat]]
-author = [[Demonnic]]
+mpackage = [[DGRGUI]]
+author = [[WizzyDizzy]]
 icon = [[computer.png]]
-title = [[Premade tabbed chat using EMCO]]
-description = [[# EMCO
+title = [[DGR Mudlet GUI with EMCO chat]]
+description = [[# DGRGUI
 
-## Prebuilt EMCO tabbed chat package
+## DGR GUI package with EMCO chat
 
-While there are many uses for an EMCO, the most requested one is by far tabbed chat display. This package takes the EMCO object available as part of the [MDK](https://github.com/demonnic/MDK) and builds a basic, generic chat tabs package out of it.
+This package includes EMCO for tabbed chat and provides a DGRGUI parent structure for scripts, aliases, and triggers.
 
-It's built using an adjustable container, so it can be moved, resized, etc right out of the box. There are range of aliases with the package which make adding/removing tabs and changing some of the basic themes of the EMCO easier.
+It's built using an adjustable container, so it can be moved, resized, etc right out of the box. There are aliases with the package which make adding/removing tabs and changing some of the basic themes of the EMCO easier.
 
-You can leverage the entire [EMCO API](https://demonnic.github.io/mdk/current/classes/EMCO.html) by targeting `demonnic.chat` , as that is the actual underlying EMCO object.
+You can leverage the entire [EMCO API](https://demonnic.github.io/mdk/current/classes/EMCO.html) by targeting `demonnic.chat`, as that is the actual underlying EMCO object.
 
 ## Installation
 
 You can use the following command in Mudlet to install the latest version:
 
-`lua installPackage("https://github.com/demonnic/EMCO/releases/latest/download/EMCOChat.mpackage")`
+`lua installPackage("https://github.com/dragonsgatereborn/DGR-Mudlet-GUI/releases/latest/download/DGRGUI.mpackage")`
 
 Once you have it installed you can update by using the `emco update` alias.
 
@@ -77,5 +77,5 @@ If you want to send lines to the EMCO in code yourself, you can use `demonnic.ch
 * `emco update`
   * (re)install the latest version of the package
 ]]
-version = [[2.9.0]]
+version = [[00.00.01]]
 created = [[2023-06-19T03:37:11+0000]]
