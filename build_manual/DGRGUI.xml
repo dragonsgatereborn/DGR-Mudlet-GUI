@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<MudletPackage version="1.001"><ScriptPackage><ScriptGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><eventHandlerList /><Script isActive="yes" isFolder="no"><name>README</name><script>--[[
+<MudletPackage version="1.001"><ScriptPackage><Script isActive="yes" isFolder="no"><name>README</name><script>--[[
 DGRGUI Scripts
 
 This folder is the parent for DGRGUI scripts.
 EMCO scripts live in DGRGUI/EMCO.
 --]]
-</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script><ScriptGroup isActive="yes" isFolder="yes"><name>EMCO</name><script /><packageName>DGRGUI</packageName><Script isActive="yes" isFolder="no"><name>Code</name><script>--[[
+</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script><Script isActive="yes" isFolder="no"><name>EMCO Chat</name><script>--[[
 ========================================================
  EMCO CHAT WINDOW — AVAILABLE COMMANDS &amp; FEATURES
 ========================================================
@@ -266,7 +266,7 @@ local function startup()
 end
 
 registerNamedEventHandler("demonnicEMCO", "EMCOprebuilt startup", "sysLoadEvent", startup)
-</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script></ScriptGroup></ScriptGroup></ScriptPackage><AliasPackage><Alias isActive="yes" isFolder="no"><name>README</name><script>--[[
+</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script></ScriptPackage><AliasPackage><Alias isActive="yes" isFolder="no"><name>README</name><script>--[[
 DGRGUI Aliases
 
 This folder is the parent for DGRGUI aliases.
@@ -458,7 +458,7 @@ for name, desc in spairs(aliases) do
   echo(f"* {name}")
   echo(f"  * {desc}")
 end
-</script><command /><packageName>DGRGUI</packageName><regex>^emco( usage)?$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco update</name><script>local currentVersion = "0.0.8"
+</script><command /><packageName>DGRGUI</packageName><regex>^emco( usage)?$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco update</name><script>local currentVersion = "0.0.9"
 local repoUrl = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
 local apiUrl = "https://api.github.com/repos/dragonsgatereborn/DGR-Mudlet-GUI/releases/latest"
 local packageUrl = repoUrl .. "/releases/latest/download/DGRGUI.mpackage"
@@ -530,7 +530,7 @@ collectgarbage("collect")
 
 demonnic.helpers.resetToDefaults()
 echo("Restarted EMCO chat window.")
-</script><command /><packageName>DGRGUI</packageName><regex>^emco restart$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco version</name><script>local version = "0.0.8"
+</script><command /><packageName>DGRGUI</packageName><regex>^emco restart$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco version</name><script>local version = "0.0.9"
 local repo = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
 
 cecho("&lt;green&gt;DGRGUI Package\n")
