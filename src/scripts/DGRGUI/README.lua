@@ -14,6 +14,9 @@ Commands
 - gui restart
 - gui version
 
+Layout
+- Main display area is centered with 300px margins on left/right
+
 Notes
 - Do not add or change anything inside DGRGUI package folders.
 - Updates overwrite package contents and remove local edits.
