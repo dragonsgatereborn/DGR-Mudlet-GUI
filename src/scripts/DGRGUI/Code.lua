@@ -12,6 +12,9 @@ end
 function DGRGUI.start()
   safeDestroy(DGRGUI.mainContainer)
 
+  if setBorderLeft then setBorderLeft(300) end
+  if setBorderRight then setBorderRight(300) end
+
   DGRGUI.mainContainer = Geyser.Container:new({
     name = "DGRGUI_Main",
     x = 300,
@@ -29,6 +32,16 @@ function DGRGUI.start()
   }, DGRGUI.mainContainer)
 
   DGRGUI.mainLabel:setStyleSheet([[background-color: rgba(0,0,0,20%); border: 1px solid #3a3a3a;]])
+end
+
+if registerAnonymousEventHandler then
+  if DGRGUI._resizeHandler then
+    killAnonymousEventHandler(DGRGUI._resizeHandler)
+  end
+  DGRGUI._resizeHandler = registerAnonymousEventHandler("sysWindowResizeEvent", function()
+    if setBorderLeft then setBorderLeft(300) end
+    if setBorderRight then setBorderRight(300) end
+  end)
 end
 
 DGRGUI.start()
