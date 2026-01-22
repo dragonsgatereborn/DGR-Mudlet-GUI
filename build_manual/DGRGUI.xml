@@ -54,6 +54,41 @@ if registerAnonymousEventHandler then
     DGRGUI.applyBackground()
   end)
 end
+</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script><Script isActive="yes" isFolder="no"><name>Main</name><script>DGRGUI = DGRGUI or {}
+DGRGUI.modules = DGRGUI.modules or {}
+
+local function safe_call(label, fn)
+  if type(fn) == "function" then
+    local ok, err = pcall(fn)
+    if not ok then
+      if cecho then
+        cecho("&lt;red&gt;DGRGUI: " .. label .. " failed: " .. tostring(err) .. "\n")
+      end
+    end
+  end
+end
+
+function DGRGUI.restart()
+  -- Re-apply borders/background if available
+  safe_call("applyMainDisplayBorders", DGRGUI.applyMainDisplayBorders)
+  safe_call("applyBackground", DGRGUI.applyBackground)
+
+  -- Restart EMCO chat container if present
+  if demonnic and demonnic.helpers then
+    safe_call("emco resetToDefaults", demonnic.helpers.resetToDefaults)
+    safe_call("emco load", demonnic.helpers.load)
+  end
+
+  -- Restart any registered modules
+  for name, mod in pairs(DGRGUI.modules) do
+    if type(mod) == "table" and type(mod.restart) == "function" then
+      safe_call("module " .. tostring(name) .. " restart", mod.restart)
+    end
+  end
+end
+
+-- Run once on load so base GUI state is applied
+DGRGUI.restart()
 </script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script><ScriptGroup isActive="yes" isFolder="yes"><name>EMCO</name><script /><packageName>DGRGUI</packageName><Script isActive="yes" isFolder="no"><name>Code</name><script>--[[
 ========================================================
  EMCO CHAT WINDOW — AVAILABLE COMMANDS &amp; FEATURES
@@ -321,7 +356,19 @@ DGRGUI Aliases
 This folder is the parent for DGRGUI aliases.
 EMCO aliases live in DGRGUI/EMCO.
 --]]
-</script><command /><packageName>DGRGUI</packageName><regex>^__DGRGUI_README__$</regex></Alias><AliasGroup isActive="yes" isFolder="yes"><name>EMCO</name><script /><packageName>DGRGUI</packageName><Alias isActive="yes" isFolder="no"><name>emco</name><script>local valid_options = {"font", "fontSize", "tabFontSize", "addFontSize", "blink", "blankLine", "timestamp", "save", "load", "show", "hide"}
+</script><command /><packageName>DGRGUI</packageName><regex>^__DGRGUI_README__$</regex></Alias><Alias isActive="yes" isFolder="no"><name>dgrgui restart</name><script>local echo = echo or cecho
+
+if DGRGUI and DGRGUI.restart then
+  DGRGUI.restart()
+  if echo then
+    echo("DGRGUI: restart complete.\n")
+  end
+else
+  if echo then
+    echo("DGRGUI: restart not available. Try reinstalling the package.\n")
+  end
+end
+</script><command /><packageName>DGRGUI</packageName><regex>^dgrgui restart$</regex></Alias><AliasGroup isActive="yes" isFolder="yes"><name>EMCO</name><script /><packageName>DGRGUI</packageName><Alias isActive="yes" isFolder="no"><name>emco</name><script>local valid_options = {"font", "fontSize", "tabFontSize", "addFontSize", "blink", "blankLine", "timestamp", "save", "load", "show", "hide"}
 local valid_options_string = table.concat(valid_options, ", ")
 local option = matches[2]
 local value = matches[3]

@@ -9,6 +9,7 @@ xml_path = base_dir / "build_manual" / "DGRGUI.xml"
 pkg_name = "DGRGUI"
 
 src_alias_dir = base_dir / "src" / "aliases" / "DGRGUI" / "EMCO"
+src_gui_alias_dir = base_dir / "src" / "aliases" / "DGRGUI"
 src_script_dir = base_dir / "src" / "scripts" / "DGRGUI" / "EMCO"
 src_trigger_dir = base_dir / "src" / "triggers" / "DGRGUI" / "EMCOCHAT"
 
@@ -108,6 +109,19 @@ add_text(alias_group, "packageName", pkg_name)
 parent_alias_readme = base_dir / "src" / "aliases" / "DGRGUI" / "README.lua"
 if parent_alias_readme.exists():
     add_alias(alias_group, "README", parent_alias_readme.read_text(encoding="utf-8"), "^__DGRGUI_README__$")
+
+parent_aliases_json_path = src_gui_alias_dir / "aliases.json"
+if parent_aliases_json_path.exists():
+    parent_aliases_json = json.loads(parent_aliases_json_path.read_text(encoding="utf-8"))
+    for alias_def in parent_aliases_json:
+        name = alias_def["name"]
+        regex = alias_def["regex"]
+        filename = name.replace(" ", "_") + ".lua"
+        script_path = src_gui_alias_dir / filename
+        if not script_path.exists():
+            raise SystemExit(f"Missing alias source file: {script_path}")
+        script_content = script_path.read_text(encoding="utf-8").replace("@PKGNAME@", pkg_name)
+        add_alias(alias_group, name, script_content, regex)
 
 emco_alias_group = ET.SubElement(alias_group, "AliasGroup", isActive="yes", isFolder="yes")
 add_text(emco_alias_group, "name", "EMCO")

@@ -1,0 +1,6 @@
+[
+  {
+    "name": "dgrgui restart",
+    "regex": "^dgrgui restart$"
+  }
+]
