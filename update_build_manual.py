@@ -10,7 +10,7 @@ pkg_name = "DGRGUI"
 
 src_alias_dir = base_dir / "src" / "aliases" / "DGRGUI" / "EMCO"
 src_script_dir = base_dir / "src" / "scripts" / "DGRGUI" / "EMCO"
-src_trigger_dir = base_dir / "src" / "triggers" / "DGRGUI" / "EMCO"
+src_trigger_dir = base_dir / "src" / "triggers" / "DGRGUI" / "EMCOCHAT"
 
 aliases_json = json.loads((src_alias_dir / "aliases.json").read_text(encoding="utf-8"))
 
@@ -42,8 +42,8 @@ def add_alias(parent, name, script_text, regex):
     return alias_elem
 
 
-def add_trigger(parent, name, script_text, regex):
-    trigger_elem = ET.SubElement(parent, "Trigger", isActive="yes", isFolder="no")
+def add_trigger(parent, name, script_text, regex, is_active="yes"):
+    trigger_elem = ET.SubElement(parent, "Trigger", isActive=is_active, isFolder="no")
     add_text(trigger_elem, "name", name)
     add_text(trigger_elem, "script", script_text)
     add_text(trigger_elem, "command")
@@ -125,13 +125,27 @@ if parent_trigger_readme.exists():
     add_trigger(trigger_group, "README", parent_trigger_readme.read_text(encoding="utf-8"), "^__DGRGUI_TRIGGERS_README__$")
 
 emco_trigger_group = ET.SubElement(trigger_group, "TriggerGroup", isActive="yes", isFolder="yes")
-add_text(emco_trigger_group, "name", "EMCO")
+add_text(emco_trigger_group, "name", "EMCOCHAT")
 add_text(emco_trigger_group, "script")
 add_text(emco_trigger_group, "packageName", pkg_name)
 
 emco_trigger_readme = src_trigger_dir / "README.lua"
 if emco_trigger_readme.exists():
     add_trigger(emco_trigger_group, "README", emco_trigger_readme.read_text(encoding="utf-8"), "^__DGRGUI_EMCO_TRIGGERS_README__$")
+
+triggers_json_path = src_trigger_dir / "triggers.json"
+if triggers_json_path.exists():
+    triggers_json = json.loads(triggers_json_path.read_text(encoding="utf-8"))
+    for entry in triggers_json:
+        name = entry.get("name")
+        regex = entry.get("regex")
+        if not name or not regex:
+            continue
+        trigger_path = src_trigger_dir / f"{name}.lua"
+        if not trigger_path.exists():
+            raise SystemExit(f"Missing trigger source file: {trigger_path}")
+        trigger_content = trigger_path.read_text(encoding="utf-8")
+        add_trigger(emco_trigger_group, name, trigger_content, regex, is_active="no")
 
 xml_declaration = "<?xml version='1.0' encoding='utf-8'?>\n"
 xml_body = ET.tostring(root, encoding="unicode")

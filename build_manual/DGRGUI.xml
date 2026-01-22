@@ -1,5 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<MudletPackage version="1.001"><ScriptPackage><Script isActive="yes" isFolder="no"><name>Code</name><packageName>DGRGUI</packageName><script>--[[
+<MudletPackage version="1.001"><ScriptPackage><ScriptGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><eventHandlerList /><Script isActive="yes" isFolder="no"><name>README</name><script>--[[
+DGRGUI Scripts
+
+This folder is the parent for DGRGUI scripts.
+EMCO scripts live in DGRGUI/EMCO.
+--]]
+</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script><ScriptGroup isActive="yes" isFolder="yes"><name>EMCO</name><script /><packageName>DGRGUI</packageName><Script isActive="yes" isFolder="no"><name>Code</name><script>--[[
 ========================================================
  EMCO CHAT WINDOW — AVAILABLE COMMANDS &amp; FEATURES
 ========================================================
@@ -260,7 +266,13 @@ local function startup()
 end
 
 registerNamedEventHandler("demonnicEMCO", "EMCOprebuilt startup", "sysLoadEvent", startup)
-</script><command /><eventHandlerList /></Script></ScriptPackage><AliasPackage><Alias isActive="yes" isFolder="no"><name>emco</name><packageName>DGRGUI</packageName><script>local valid_options = {"font", "fontSize", "tabFontSize", "addFontSize", "blink", "blankLine", "timestamp", "save", "load", "show", "hide"}
+</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script></ScriptGroup></ScriptGroup></ScriptPackage><AliasPackage><AliasGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><Alias isActive="yes" isFolder="no"><name>README</name><script>--[[
+DGRGUI Aliases
+
+This folder is the parent for DGRGUI aliases.
+EMCO aliases live in DGRGUI/EMCO.
+--]]
+</script><command /><packageName>DGRGUI</packageName><regex>^__DGRGUI_README__$</regex></Alias><AliasGroup isActive="yes" isFolder="yes"><name>EMCO</name><script /><packageName>DGRGUI</packageName><Alias isActive="yes" isFolder="no"><name>emco</name><script>local valid_options = {"font", "fontSize", "tabFontSize", "addFontSize", "blink", "blankLine", "timestamp", "save", "load", "show", "hide"}
 local valid_options_string = table.concat(valid_options, ", ")
 local option = matches[2]
 local value = matches[3]
@@ -446,7 +458,7 @@ for name, desc in spairs(aliases) do
   echo(f"* {name}")
   echo(f"  * {desc}")
 end
-</script><command /><packageName>DGRGUI</packageName><regex>^emco( usage)?$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco update</name><script>local currentVersion = "0.0.5"
+</script><command /><packageName>DGRGUI</packageName><regex>^emco( usage)?$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco update</name><script>local currentVersion = "2.15.15"
 local repoUrl = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
 local apiUrl = "https://api.github.com/repos/dragonsgatereborn/DGR-Mudlet-GUI/releases/latest"
 local packageUrl = repoUrl .. "/releases/latest/download/DGRGUI.mpackage"
@@ -454,20 +466,20 @@ local packageUrl = repoUrl .. "/releases/latest/download/DGRGUI.mpackage"
 local function installLatest(latestTag)
   uninstallPackage("DGRGUI")
   installPackage(packageUrl)
-  cecho("&lt;green&gt;DGRGUI: &lt;reset&gt;Update complete! Package installed from:\n")
-  cecho("&lt;green&gt;DGRGUI: &lt;reset&gt;" .. packageUrl .. "\n")
+  cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Update complete! Package installed from:\n")
+  cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;" .. packageUrl .. "\n")
 end
 
-cecho("&lt;green&gt;DGRGUI: &lt;reset&gt;Current version: " .. currentVersion .. "\n")
-cecho("&lt;green&gt;DGRGUI: &lt;reset&gt;Updating from " .. repoUrl .. "\n")
-cecho("&lt;green&gt;DGRGUI: &lt;reset&gt;Fetching latest version...\n")
+cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Current version: " .. currentVersion .. "\n")
+cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Updating from " .. repoUrl .. "\n")
+cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Fetching latest version...\n")
 
 if getHTTP then
   local completed = false
   tempTimer(8, function()
     if not completed then
       completed = true
-      cecho("&lt;green&gt;DGRGUI: &lt;reset&gt;Latest version: unknown (timed out). Installing latest.\n")
+      cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Latest version: unknown (timed out). Installing latest.\n")
       installLatest("")
     end
   end)
@@ -475,30 +487,30 @@ if getHTTP then
     if completed then return end
     completed = true
     if code and tonumber(code) ~= 200 then
-      cecho("&lt;green&gt;DGRGUI: &lt;reset&gt;Latest version: unknown (HTTP " .. tostring(code) .. "). Installing latest.\n")
+      cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Latest version: unknown (HTTP " .. tostring(code) .. "). Installing latest.\n")
       installLatest("")
       return
     end
     local tag = body and body:match('"tag_name"%s*:%s*"([^"]+)"') or ""
     if tag == "" then
-      cecho("&lt;green&gt;DGRGUI: &lt;reset&gt;Latest version: unknown (invalid response). Installing latest.\n")
+      cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Latest version: unknown (invalid response). Installing latest.\n")
       installLatest("")
       return
     end
-    cecho("&lt;green&gt;DGRGUI: &lt;reset&gt;Latest version: " .. tag .. "\n")
+    cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Latest version: " .. tag .. "\n")
     local currentTag = currentVersion
     if tag == currentTag or tag == ("v" .. currentTag) then
-      cecho("&lt;green&gt;DGRGUI: &lt;reset&gt;Already up to date.\n")
+      cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Already up to date.\n")
       return
     end
-    cecho("&lt;green&gt;DGRGUI: &lt;reset&gt;Updating to " .. tag .. "\n")
+    cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Updating to " .. tag .. "\n")
     installLatest(tag)
   end)
 else
-  cecho("&lt;green&gt;DGRGUI: &lt;reset&gt;Latest version: unknown (getHTTP unavailable). Installing latest.\n")
+  cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Latest version: unknown (getHTTP unavailable). Installing latest.\n")
   installLatest("")
 end
-</script><command /><packageName>DGRGUI</packageName><regex>^(dgrgui|emco) update$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco restart</name><script>local echo = demonnic.helpers.echo
+</script><command /><packageName>DGRGUI</packageName><regex>^emco update$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco restart</name><script>local echo = demonnic.helpers.echo
 
 if demonnic.container then
   if demonnic.container.hide then
@@ -518,16 +530,105 @@ collectgarbage("collect")
 
 demonnic.helpers.resetToDefaults()
 echo("Restarted EMCO chat window.")
-</script><command /><packageName>DGRGUI</packageName><regex>^emco restart$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco version</name><script>local version = "0.0.5"
-local repo = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
+</script><command /><packageName>DGRGUI</packageName><regex>^emco restart$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco version</name><script>local version = "2.15.15"
+local repo = "https://github.com/dragonsgatereborn/EMCO"
 
-cecho("&lt;green&gt;DGRGUI Package\n")
+cecho("&lt;green&gt;EMCO Chat Package\n")
 cecho("&lt;green&gt;Version: &lt;yellow&gt;" .. version .. "\n")
-cecho("&lt;green&gt;Repository: &lt;cyan&gt;dragonsgatereborn/DGR-Mudlet-GUI\n")
+cecho("&lt;green&gt;Repository: &lt;cyan&gt;dragonsgatereborn/EMCO\n")
 cecho("&lt;green&gt;GitHub: &lt;cyan&gt;" .. repo .. "\n")
-cecho("&lt;white&gt;Use &lt;green&gt;dgrgui update&lt;white&gt; or &lt;green&gt;emco update&lt;white&gt; to check for updates.\n")
-</script><command /><packageName>DGRGUI</packageName><regex>^(dgrgui|emco) version$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco title</name><script>local title = matches[2]
+cecho("&lt;white&gt;Use &lt;green&gt;emco update&lt;white&gt; to check for updates.\n")
+</script><command /><packageName>DGRGUI</packageName><regex>^emco version$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco title</name><script>local title = matches[2]
 if title == "clear" then
   title = ""
 end
-demonnic.container:setTitle(title)</script><command /><packageName>DGRGUI</packageName><regex>^emco title (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco lock</name><script>demonnic.container:lockContainer()</script><command /><packageName>DGRGUI</packageName><regex>^emco lock$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco unlock</name><script>demonnic.container:unlockContainer()</script><command /><packageName>DGRGUI</packageName><regex>^emco unlock$</regex></Alias></AliasPackage><TriggerPackage></TriggerPackage></MudletPackage>
+demonnic.container:setTitle(title)</script><command /><packageName>DGRGUI</packageName><regex>^emco title (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco lock</name><script>demonnic.container:lockContainer()</script><command /><packageName>DGRGUI</packageName><regex>^emco lock$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco unlock</name><script>demonnic.container:unlockContainer()</script><command /><packageName>DGRGUI</packageName><regex>^emco unlock$</regex></Alias><Alias isActive="yes" isFolder="no"><name>README</name><script>--[[
+EMCO Chat Package README
+
+Author: Demonnic
+Contributor: WizzyDizzy
+
+Important
+- Do not add or change anything inside the EMCOChat package folders.
+- EMCO updates overwrite package contents and will delete custom changes.
+- Put your custom triggers/aliases/scripts outside EMCOChat, or in a separate custom package.
+
+Install
+- lua installPackage("https://github.com/dragonsgatereborn/EMCO/releases/latest/download/EMCOChat.mpackage")
+- emco update (updates from GitHub)
+
+Aliases
+- emco addtab &lt;tabname&gt;
+- emco blankLine &lt;true|false&gt;
+- emco blink &lt;true|false&gt;
+- emco color &lt;option&gt; &lt;value&gt;
+- emco font &lt;fontname&gt;
+- emco fontSize &lt;size&gt;
+- emco tabFontSize &lt;size&gt;
+- emco addFontSize &lt;size&gt;
+- emco gag &lt;pattern&gt;
+- emco gaglist
+- emco hide
+- emco load
+- emco lock
+- emco notify &lt;tabName&gt;
+- emco remtab &lt;tabname&gt;
+- emco save
+- emco show
+- emco timestamp &lt;true|false&gt;
+- emco title &lt;new title&gt;
+- emco unlock
+- emco ungag &lt;pattern&gt;
+- emco unnotify &lt;tabName&gt;
+- emco update
+- emco restart
+- emco version
+
+Repository
+- https://github.com/dragonsgatereborn/EMCO
+--]]
+</script><command /><packageName>DGRGUI</packageName><regex>^__EMCO_README__$</regex></Alias></AliasGroup></AliasGroup></AliasPackage><TriggerPackage><TriggerGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><Trigger isActive="yes" isFolder="no"><name>README</name><script>--[[
+DGRGUI Triggers
+
+This folder is the parent for DGRGUI triggers.
+EMCO example triggers live in DGRGUI/EMCOCHAT.
+--]]
+</script><command /><packageName>DGRGUI</packageName><regexCodeList><string>^__DGRGUI_TRIGGERS_README__$</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger><TriggerGroup isActive="yes" isFolder="yes"><name>EMCOCHAT</name><script /><packageName>DGRGUI</packageName><Trigger isActive="yes" isFolder="no"><name>README</name><script>--[[
+EMCO Chat Example Triggers
+
+These triggers are DISABLED by default and meant as copy/paste examples.
+Duplicate them into your own trigger folders and edit the regex patterns
+to match your game's output.
+
+Tip:
+  demonnic.chat:append("TabName") will copy the matched line into the tab.
+--]]
+</script><command /><packageName>DGRGUI</packageName><regexCodeList><string>^__DGRGUI_EMCO_TRIGGERS_README__$</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger><Trigger isActive="no" isFolder="no"><name>All</name><script>-- Example trigger for All tab.
+-- Update the regex in triggers.json to match your game's output.
+
+demonnic.chat:append("All")
+</script><command /><packageName>DGRGUI</packageName><regexCodeList><string>^\[ALL\].*</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger><Trigger isActive="no" isFolder="no"><name>Program</name><script>-- Example trigger for Program tab.
+-- Update the regex in triggers.json to match your game's output.
+
+demonnic.chat:append("Program")
+</script><command /><packageName>DGRGUI</packageName><regexCodeList><string>^\[PROGRAM\].*</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger><Trigger isActive="no" isFolder="no"><name>OOC</name><script>-- Example trigger for OOC tab.
+-- Update the regex in triggers.json to match your game's output.
+
+demonnic.chat:append("OOC")
+</script><command /><packageName>DGRGUI</packageName><regexCodeList><string>^\[OOC\].*</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger><Trigger isActive="no" isFolder="no"><name>RP</name><script>-- Example trigger for RP tab.
+-- Update the regex in triggers.json to match your game's output.
+
+demonnic.chat:append("RP")
+</script><command /><packageName>DGRGUI</packageName><regexCodeList><string>^\[RP\].*</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger><Trigger isActive="no" isFolder="no"><name>Whisper</name><script>-- Example trigger for Whisper tab.
+-- Update the regex in triggers.json to match your game's output.
+
+demonnic.chat:append("Whisper")
+</script><command /><packageName>DGRGUI</packageName><regexCodeList><string>^\[WHISPER\].*</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger><Trigger isActive="no" isFolder="no"><name>Group</name><script>-- Example trigger for Group tab.
+-- Update the regex in triggers.json to match your game's output.
+
+demonnic.chat:append("Group")
+</script><command /><packageName>DGRGUI</packageName><regexCodeList><string>^\[GROUP\].*</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger><Trigger isActive="no" isFolder="no"><name>Game</name><script>-- Example trigger for Game tab.
+-- Update the regex in triggers.json to match your game's output.
+
+demonnic.chat:append("Game")
+</script><command /><packageName>DGRGUI</packageName><regexCodeList><string>^\[GAME\].*</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger></TriggerGroup></TriggerGroup></TriggerPackage></MudletPackage>
