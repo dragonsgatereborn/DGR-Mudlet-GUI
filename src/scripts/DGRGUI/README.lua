@@ -10,6 +10,8 @@ Install
 - lua installPackage("https://github.com/dragonsgatereborn/DGR-Mudlet-GUI/releases/latest/download/DGRGUI.mpackage")
 
 Commands
+- gui install
+- gui uninstall
 - gui update
 - gui restart
 - gui version

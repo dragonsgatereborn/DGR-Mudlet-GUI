@@ -1,4 +1,6 @@
 [
+  {"name": "gui install", "regex": "^gui install$"},
+  {"name": "gui uninstall", "regex": "^gui uninstall$"},
   {"name": "gui update", "regex": "^gui update$"},
   {"name": "gui restart", "regex": "^gui restart$"},
   {"name": "gui version", "regex": "^gui version$"}
