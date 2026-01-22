@@ -1,4 +1,4 @@
-local version = "0.3.0"
+local version = "00.03.01"
 local repo = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
 
 cecho("<green>DGR GUI\n")

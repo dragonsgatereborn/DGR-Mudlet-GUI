@@ -79,7 +79,7 @@ for alias_def in aliases_json:
     ET.SubElement(alias, "name").text = name
     ET.SubElement(alias, "script").text = script_text
     ET.SubElement(alias, "command")
-    ET.SubElement(alias, "packageName").text = pkg_name
+    ET.SubElement(alias, "packageName")
     ET.SubElement(alias, "regex").text = regex
 
 # TriggerPackage
