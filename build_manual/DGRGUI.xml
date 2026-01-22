@@ -1,11 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<MudletPackage version="1.001"><ScriptPackage><ScriptGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><eventHandlerList /><Script isActive="yes" isFolder="no"><name>README</name><script>--[[
-DGRGUI Scripts
-
-This folder is the parent for DGRGUI scripts.
-EMCO scripts live in DGRGUI/EMCO.
---]]
-</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script><ScriptGroup isActive="yes" isFolder="yes"><name>EMCO</name><script /><packageName>DGRGUI</packageName><Script isActive="yes" isFolder="no"><name>Code</name><script>--[[
+<MudletPackage version="1.001"><ScriptPackage><ScriptGroup isActive="yes" isFolder="yes"><name>EMCO</name><script /><packageName>DGRGUI</packageName><Script isActive="yes" isFolder="no"><name>Code</name><script>--[[
 ========================================================
  EMCO CHAT WINDOW — AVAILABLE COMMANDS &amp; FEATURES
 ========================================================
@@ -266,13 +260,7 @@ local function startup()
 end
 
 registerNamedEventHandler("demonnicEMCO", "EMCOprebuilt startup", "sysLoadEvent", startup)
-</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script></ScriptGroup></ScriptGroup></ScriptPackage><AliasPackage><AliasGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><Alias isActive="yes" isFolder="no"><name>README</name><script>--[[
-DGRGUI Aliases
-
-This folder is the parent for DGRGUI aliases.
-EMCO aliases live in DGRGUI/EMCO.
---]]
-</script><command /><packageName>DGRGUI</packageName><regex>^__DGRGUI_README__$</regex></Alias><AliasGroup isActive="yes" isFolder="yes"><name>EMCO</name><script /><packageName>DGRGUI</packageName><Alias isActive="yes" isFolder="no"><name>emco</name><script>local valid_options = {"font", "fontSize", "tabFontSize", "addFontSize", "blink", "blankLine", "timestamp", "save", "load", "show", "hide"}
+</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script></ScriptGroup></ScriptPackage><AliasPackage><AliasGroup isActive="yes" isFolder="yes"><name>EMCO</name><script /><packageName>DGRGUI</packageName><Alias isActive="yes" isFolder="no"><name>emco</name><script>local valid_options = {"font", "fontSize", "tabFontSize", "addFontSize", "blink", "blankLine", "timestamp", "save", "load", "show", "hide"}
 local valid_options_string = table.concat(valid_options, ", ")
 local option = matches[2]
 local value = matches[3]
@@ -458,7 +446,7 @@ for name, desc in spairs(aliases) do
   echo(f"* {name}")
   echo(f"  * {desc}")
 end
-</script><command /><packageName>DGRGUI</packageName><regex>^emco( usage)?$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco update</name><script>local currentVersion = "2.15.16"
+</script><command /><packageName>DGRGUI</packageName><regex>^emco( usage)?$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco update</name><script>local currentVersion = "0.0.1"
 local repoUrl = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
 local apiUrl = "https://api.github.com/repos/dragonsgatereborn/DGR-Mudlet-GUI/releases/latest"
 local packageUrl = repoUrl .. "/releases/latest/download/DGRGUI.mpackage"
@@ -530,7 +518,7 @@ collectgarbage("collect")
 
 demonnic.helpers.resetToDefaults()
 echo("Restarted EMCO chat window.")
-</script><command /><packageName>DGRGUI</packageName><regex>^emco restart$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco version</name><script>local version = "2.15.16"
+</script><command /><packageName>DGRGUI</packageName><regex>^emco restart$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco version</name><script>local version = "0.0.1"
 local repo = "https://github.com/dragonsgatereborn/EMCO"
 
 cecho("&lt;green&gt;EMCO Chat Package\n")
@@ -542,60 +530,4 @@ cecho("&lt;white&gt;Use &lt;green&gt;emco update&lt;white&gt; to check for updat
 if title == "clear" then
   title = ""
 end
-demonnic.container:setTitle(title)</script><command /><packageName>DGRGUI</packageName><regex>^emco title (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco lock</name><script>demonnic.container:lockContainer()</script><command /><packageName>DGRGUI</packageName><regex>^emco lock$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco unlock</name><script>demonnic.container:unlockContainer()</script><command /><packageName>DGRGUI</packageName><regex>^emco unlock$</regex></Alias><Alias isActive="yes" isFolder="no"><name>README</name><script>--[[
-EMCO Chat Package README
-
-Author: Demonnic
-Contributor: WizzyDizzy
-
-Important
-- Do not add or change anything inside the EMCOChat package folders.
-- EMCO updates overwrite package contents and will delete custom changes.
-- Put your custom triggers/aliases/scripts outside EMCOChat, or in a separate custom package.
-
-Install
-- lua installPackage("https://github.com/dragonsgatereborn/EMCO/releases/latest/download/EMCOChat.mpackage")
-- emco update (updates from GitHub)
-
-Aliases
-- emco addtab &lt;tabname&gt;
-- emco blankLine &lt;true|false&gt;
-- emco blink &lt;true|false&gt;
-- emco color &lt;option&gt; &lt;value&gt;
-- emco font &lt;fontname&gt;
-- emco fontSize &lt;size&gt;
-- emco tabFontSize &lt;size&gt;
-- emco addFontSize &lt;size&gt;
-- emco gag &lt;pattern&gt;
-- emco gaglist
-- emco hide
-- emco load
-- emco lock
-- emco notify &lt;tabName&gt;
-- emco remtab &lt;tabname&gt;
-- emco save
-- emco show
-- emco timestamp &lt;true|false&gt;
-- emco title &lt;new title&gt;
-- emco unlock
-- emco ungag &lt;pattern&gt;
-- emco unnotify &lt;tabName&gt;
-- emco update
-- emco restart
-- emco version
-
-Repository
-- https://github.com/dragonsgatereborn/EMCO
---]]
-</script><command /><packageName>DGRGUI</packageName><regex>^__EMCO_README__$</regex></Alias></AliasGroup></AliasGroup></AliasPackage><TriggerPackage><TriggerGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><Trigger isActive="yes" isFolder="no"><name>README</name><script>--[[
-DGRGUI Triggers
-
-This folder is the parent for DGRGUI triggers.
-EMCO triggers live in DGRGUI/EMCO.
---]]
-</script><command /><packageName>DGRGUI</packageName><regexCodeList><string>^__DGRGUI_TRIGGERS_README__$</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger><TriggerGroup isActive="yes" isFolder="yes"><name>EMCO</name><script /><packageName>DGRGUI</packageName><Trigger isActive="yes" isFolder="no"><name>README</name><script>--[[
-EMCO Triggers
-
-No default EMCO triggers are included.
---]]
-</script><command /><packageName>DGRGUI</packageName><regexCodeList><string>^__DGRGUI_EMCO_TRIGGERS_README__$</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger></TriggerGroup></TriggerGroup></TriggerPackage></MudletPackage>
+demonnic.container:setTitle(title)</script><command /><packageName>DGRGUI</packageName><regex>^emco title (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco lock</name><script>demonnic.container:lockContainer()</script><command /><packageName>DGRGUI</packageName><regex>^emco lock$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco unlock</name><script>demonnic.container:unlockContainer()</script><command /><packageName>DGRGUI</packageName><regex>^emco unlock$</regex></Alias></AliasGroup></AliasPackage><TriggerPackage><TriggerGroup isActive="yes" isFolder="yes"><name>EMCO</name><script /><packageName>DGRGUI</packageName></TriggerGroup></TriggerPackage></MudletPackage>
