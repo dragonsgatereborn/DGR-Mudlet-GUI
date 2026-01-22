@@ -1,7 +1,7 @@
 [
   {
     "name": "emco",
-    "regex": "^emco (save|load|font|fontSize|tabFontSize|addFontSize|blink|blankLine|timestamp|show|hide)(?: (.+))?$"
+    "regex": "^emco (save|load|font|fontSize|blink|blankLine|timestamp|show|hide)(?: (.+))?$"
   },
   {
     "name": "emco gag",
@@ -48,22 +48,6 @@
     "regex": "^emco update$"
   },
   {
-    "name": "emco install",
-    "regex": "^emco install$"
-  },
-  {
-    "name": "emco uninstall",
-    "regex": "^emco uninstall$"
-  },
-  {
-    "name": "emco restart",
-    "regex": "^emco restart$"
-  },
-  {
-    "name": "emco version",
-    "regex": "^emco version$"
-  },
-  {
     "name": "emco title",
     "regex": "^emco title (.+)"
   },
@@ -74,9 +58,5 @@
   {
     "name": "emco unlock",
     "regex": "^emco unlock$"
-  },
-  {
-    "name": "README",
-    "regex": "^__EMCO_README__$"
   }
 ]

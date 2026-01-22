@@ -8,20 +8,13 @@ It's built using an adjustable container, so it can be moved, resized, etc right
 
 You can leverage the entire [EMCO API](https://demonnic.github.io/mdk/current/classes/EMCO.html) by targeting `demonnic.chat` , as that is the actual underlying EMCO object.
 
-Author: Demonnic  
-Contributor: WizzyDizzy
-
 ## Installation
 
 You can use the following command in Mudlet to install the latest version:
 
-`lua installPackage("https://github.com/dragonsgatereborn/EMCO/releases/latest/download/EMCOChat.mpackage")`
+`lua installPackage("https://github.com/demonnic/EMCO/releases/latest/download/EMCOChat.mpackage")`
 
 Once you have it installed you can update by using the `emco update` alias.
-
-## Important
-
-Do not add or change anything inside the EMCOChat package folders. EMCO updates overwrite package contents and will delete custom changes. Put your custom triggers/aliases/scripts outside EMCOChat or in a separate custom package.
 
 ## Usage
 
@@ -49,10 +42,6 @@ If you want to send lines to the EMCO in code yourself, you can use `demonnic.ch
   * set the font to use for the consoles
 * `emco fontSize`
   * set the font size for the consoles
-* `emco tabFontSize`
-  * set the font size for the tabs (sometimes referred to as addFontSize)
-* `emco addFontSize`
-  * alias for tabFontSize
 * `emco gag <pattern>`
   * add a gag pattern
 * `emco gaglist`
@@ -82,12 +71,4 @@ If you want to send lines to the EMCO in code yourself, you can use `demonnic.ch
 * `emco unnotify <tabName>`
   * turn off OS notifications for tabName
 * `emco update`
-  * (re)install the latest version of the package from GitHub and show the latest version tag
-* `emco install`
-  * install the latest package from GitHub
-* `emco uninstall`
-  * uninstall the EMCOChat package
-* `emco restart`
-  * restart the EMCO chat window and reload defaults
-* `emco version`
-  * display the current EMCO version and repository information
+  * (re)install the latest version of the package
