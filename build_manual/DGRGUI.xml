@@ -1,5 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<MudletPackage version="1.001"><ScriptPackage><ScriptGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><eventHandlerList /><Script isActive="yes" isFolder="no"><name>Code</name><script>local defaultConfig = {activeColor = "black", inactiveColor = "black", activeBorder = "green", activeText = "green", inactiveText = "grey", background = "black", windowBorder = "green", title = "green"}
+<MudletPackage version="1.001"><ScriptPackage><ScriptGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><eventHandlerList /><Script isActive="yes" isFolder="no"><name>README</name><script>--[[
+DGRGUI Scripts
+
+This folder is the parent for DGRGUI scripts.
+EMCO scripts live in DGRGUI/EMCO.
+--]]
+</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script><ScriptGroup isActive="yes" isFolder="yes"><name>EMCO</name><script /><packageName>DGRGUI</packageName><Script isActive="yes" isFolder="no"><name>Code</name><script>local defaultConfig = {activeColor = "black", inactiveColor = "black", activeBorder = "green", activeText = "green", inactiveText = "grey", background = "black", windowBorder = "green", title = "green"}
 local emco = require("DGRGUI.emco")
 emco.cmdLineStyleSheet = nil
 demonnic = demonnic or {}
@@ -125,7 +131,13 @@ local function startup()
 end
 
 registerNamedEventHandler("demonnicEMCO", "EMCOprebuilt startup", "sysLoadEvent", startup)
-</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script></ScriptGroup></ScriptPackage><AliasPackage><AliasGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><Alias isActive="yes" isFolder="no"><name>emco</name><script>local valid_options = {"font", "fontSize", "blink", "blankLine", "timestamp", "save", "load", "show", "hide"}
+</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script></ScriptGroup></ScriptGroup></ScriptPackage><AliasPackage><AliasGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><Alias isActive="yes" isFolder="no"><name>README</name><script>--[[
+DGRGUI Aliases
+
+This folder is the parent for DGRGUI aliases.
+EMCO aliases live in DGRGUI/EMCO.
+--]]
+</script><command /><packageName>DGRGUI</packageName><regex>^__DGRGUI_README__$</regex></Alias><AliasGroup isActive="yes" isFolder="yes"><name>EMCO</name><script /><packageName>DGRGUI</packageName><Alias isActive="yes" isFolder="no"><name>emco</name><script>local valid_options = {"font", "fontSize", "blink", "blankLine", "timestamp", "save", "load", "show", "hide"}
 local valid_options_string = table.concat(valid_options, ", ")
 local option = matches[2]
 local value = matches[3]
@@ -303,4 +315,15 @@ installPackage("https://github.com/demonnic/EMCO/releases/latest/download/DGRGUI
 if title == "clear" then
   title = ""
 end
-demonnic.container:setTitle(title)</script><command /><packageName>DGRGUI</packageName><regex>^emco title (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco lock</name><script>demonnic.container:lockContainer()</script><command /><packageName>DGRGUI</packageName><regex>^emco lock$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco unlock</name><script>demonnic.container:unlockContainer()</script><command /><packageName>DGRGUI</packageName><regex>^emco unlock$</regex></Alias></AliasGroup></AliasPackage></MudletPackage>
+demonnic.container:setTitle(title)</script><command /><packageName>DGRGUI</packageName><regex>^emco title (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco lock</name><script>demonnic.container:lockContainer()</script><command /><packageName>DGRGUI</packageName><regex>^emco lock$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco unlock</name><script>demonnic.container:unlockContainer()</script><command /><packageName>DGRGUI</packageName><regex>^emco unlock$</regex></Alias></AliasGroup></AliasGroup></AliasPackage><TriggerPackage><TriggerGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><Trigger isActive="yes" isFolder="no"><name>README</name><script>--[[
+DGRGUI Triggers
+
+This folder is the parent for DGRGUI triggers.
+EMCO triggers live in DGRGUI/EMCO.
+--]]
+</script><command /><packageName>DGRGUI</packageName><regexCodeList><string>^__DGRGUI_TRIGGERS_README__$</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger><TriggerGroup isActive="yes" isFolder="yes"><name>EMCO</name><script /><packageName>DGRGUI</packageName><Trigger isActive="yes" isFolder="no"><name>README</name><script>--[[
+EMCO Triggers
+
+No default EMCO triggers are included.
+--]]
+</script><command /><packageName>DGRGUI</packageName><regexCodeList><string>^__DGRGUI_EMCO_TRIGGERS_README__$</string></regexCodeList><regexCodePropertyList><integer>1</integer></regexCodePropertyList></Trigger></TriggerGroup></TriggerGroup></TriggerPackage></MudletPackage>
