@@ -458,7 +458,7 @@ for name, desc in spairs(aliases) do
   echo(f"* {name}")
   echo(f"  * {desc}")
 end
-</script><command /><packageName>DGRGUI</packageName><regex>^emco( usage)?$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco update</name><script>local currentVersion = "2.15.15"
+</script><command /><packageName>DGRGUI</packageName><regex>^emco( usage)?$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco update</name><script>local currentVersion = "2.15.16"
 local repoUrl = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
 local apiUrl = "https://api.github.com/repos/dragonsgatereborn/DGR-Mudlet-GUI/releases/latest"
 local packageUrl = repoUrl .. "/releases/latest/download/DGRGUI.mpackage"
@@ -530,7 +530,7 @@ collectgarbage("collect")
 
 demonnic.helpers.resetToDefaults()
 echo("Restarted EMCO chat window.")
-</script><command /><packageName>DGRGUI</packageName><regex>^emco restart$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco version</name><script>local version = "2.15.15"
+</script><command /><packageName>DGRGUI</packageName><regex>^emco restart$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco version</name><script>local version = "2.15.16"
 local repo = "https://github.com/dragonsgatereborn/EMCO"
 
 cecho("&lt;green&gt;EMCO Chat Package\n")
