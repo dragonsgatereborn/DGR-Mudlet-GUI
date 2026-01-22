@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<MudletPackage version="1.001"><ScriptPackage><ScriptGroup isActive="yes" isFolder="yes"><name>EMCO</name><script /><packageName>EMCOChat</packageName><eventHandlerList /><Script isActive="yes" isFolder="no"><name>Code</name><script>local defaultConfig = {activeColor = "black", inactiveColor = "black", activeBorder = "green", activeText = "green", inactiveText = "grey", background = "black", windowBorder = "green", title = "green"}
-local emco = require("EMCOChat.emco")
+<MudletPackage version="1.001"><ScriptPackage><ScriptGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><eventHandlerList /><Script isActive="yes" isFolder="no"><name>Code</name><script>local defaultConfig = {activeColor = "black", inactiveColor = "black", activeBorder = "green", activeText = "green", inactiveText = "grey", background = "black", windowBorder = "green", title = "green"}
+local emco = require("DGRGUI.emco")
 emco.cmdLineStyleSheet = nil
 demonnic = demonnic or {}
 demonnic.helpers = demonnic.helpers or {}
@@ -125,7 +125,7 @@ local function startup()
 end
 
 registerNamedEventHandler("demonnicEMCO", "EMCOprebuilt startup", "sysLoadEvent", startup)
-</script><command /><packageName>EMCOChat</packageName><eventHandlerList /></Script></ScriptGroup></ScriptPackage><AliasPackage><AliasGroup isActive="yes" isFolder="yes"><name>EMCO</name><script /><packageName>EMCOChat</packageName><Alias isActive="yes" isFolder="no"><name>emco</name><script>local valid_options = {"font", "fontSize", "blink", "blankLine", "timestamp", "save", "load", "show", "hide"}
+</script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script></ScriptGroup></ScriptPackage><AliasPackage><AliasGroup isActive="yes" isFolder="yes"><name>DGRGUI</name><script /><packageName>DGRGUI</packageName><Alias isActive="yes" isFolder="no"><name>emco</name><script>local valid_options = {"font", "fontSize", "blink", "blankLine", "timestamp", "save", "load", "show", "hide"}
 local valid_options_string = table.concat(valid_options, ", ")
 local option = matches[2]
 local value = matches[3]
@@ -190,19 +190,19 @@ else
     end
   end
 end
-</script><command /><packageName>EMCOChat</packageName><regex>^emco (save|load|font|fontSize|blink|blankLine|timestamp|show|hide)(?: (.+))?$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco gag</name><script>local success = demonnic.chat:addGag(matches[2])
+</script><command /><packageName>DGRGUI</packageName><regex>^emco (save|load|font|fontSize|blink|blankLine|timestamp|show|hide)(?: (.+))?$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco gag</name><script>local success = demonnic.chat:addGag(matches[2])
 local echo = demonnic.helpers.echo
 if success then
   echo(f"Successfully added '{matches[2]}' as a gag pattern")
   return
 end
-echo(f"Unable to add '{matches[2]}' as a gag pattern, this is usually because it's already added.")</script><command /><packageName>EMCOChat</packageName><regex>^emco gag (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco ungag</name><script>local success = demonnic.chat:removeGag(matches[2])
+echo(f"Unable to add '{matches[2]}' as a gag pattern, this is usually because it's already added.")</script><command /><packageName>DGRGUI</packageName><regex>^emco gag (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco ungag</name><script>local success = demonnic.chat:removeGag(matches[2])
 local echo = demonnic.helpers.echo
 if success then
   echo(f"Successfully removed '{matches[2]}' as a gag pattern")
   return
 end
-echo(f"Unable to remove '{matches[2]}' as a gag pattern, this is usually because it hasn't been set.")</script><command /><packageName>EMCOChat</packageName><regex>^emco ungag (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco gaglist</name><script>local lecho = demonnic.helpers.echo
+echo(f"Unable to remove '{matches[2]}' as a gag pattern, this is usually because it hasn't been set.")</script><command /><packageName>DGRGUI</packageName><regex>^emco ungag (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco gaglist</name><script>local lecho = demonnic.helpers.echo
 local gaggedLines = table.keys(demonnic.chat.gags)
 table.sort(gaggedLines)
 
@@ -212,7 +212,7 @@ lecho("&lt;orange&gt;Gagged lines")
 for _,pattern in ipairs(gaggedLines) do
   lecho("  &lt;purple&gt;" .. pattern)
 end
-</script><command /><packageName>EMCOChat</packageName><regex>^emco gaglist$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco notify</name><script>local tabName = matches[2]:title()
+</script><command /><packageName>DGRGUI</packageName><regex>^emco gaglist$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco notify</name><script>local tabName = matches[2]:title()
 local echo = demonnic.helpers.echo
 local ok = demonnic.chat:addNotifyTab(tabName)
 
@@ -222,7 +222,7 @@ elseif ok == false then
   echo(f"Tab {tabName} already had notifications enabled!")
 else
   echo(f"Tab {tabName} does not exist")
-end</script><command /><packageName>EMCOChat</packageName><regex>^emco notify (.*)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco unnotify</name><script>local tabName = matches[2]:title()
+end</script><command /><packageName>DGRGUI</packageName><regex>^emco notify (.*)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco unnotify</name><script>local tabName = matches[2]:title()
 local echo = demonnic.helpers.echo
 local ok = demonnic.chat:removeNotifyTab(tabName)
 
@@ -232,7 +232,7 @@ elseif ok == false then
   echo(f"Tab {tabName} already had notifications disabled!")
 else
   echo(f"Tab {tabName} does not exist")
-end</script><command /><packageName>EMCOChat</packageName><regex>^emco unnotify (.*)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco addtab</name><script>local tabName = matches[2]
+end</script><command /><packageName>DGRGUI</packageName><regex>^emco unnotify (.*)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco addtab</name><script>local tabName = matches[2]
 local pos = tonumber(matches[3])
 local echo = demonnic.helpers.echo
 local chatEMCO = demonnic.chat
@@ -241,7 +241,7 @@ if table.contains(chatEMCO.consoles, tabName) then
   echo(f"{tabName} already exists!")
   return
 end
-chatEMCO:addTab(tabName, pos)</script><command /><packageName>EMCOChat</packageName><regex>^emco addtab (\w+)( \d+)?$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco remtab</name><script>local tabName = matches[2]
+chatEMCO:addTab(tabName, pos)</script><command /><packageName>DGRGUI</packageName><regex>^emco addtab (\w+)( \d+)?$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco remtab</name><script>local tabName = matches[2]
 local echo = demonnic.helpers.echo
 local chatEMCO = demonnic.chat
 local tabList = chatEMCO.consoles
@@ -249,14 +249,14 @@ if not table.contains(tabList, tabName) then
   echo(f"{tabName} does not exist to remove. Current tabs are: {table.concat(tabList, ', '}")
   return
 end
-chatEMCO:removeTab(tabName)</script><command /><packageName>EMCOChat</packageName><regex>^emco remtab (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco color</name><script>local echo = demonnic.helpers.echo
+chatEMCO:removeTab(tabName)</script><command /><packageName>DGRGUI</packageName><regex>^emco remtab (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco color</name><script>local echo = demonnic.helpers.echo
 local ok, err = demonnic.helpers.setConfig(matches[2], matches[3])
 
 if not ok then
   echo(err)
   return
 end
-echo(f"Set color for {matches[2]} to {matches[3]}")</script><command /><packageName>EMCOChat</packageName><regex>^emco color (\w+) (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco color usage</name><script>local echo = demonnic.helpers.echo
+echo(f"Set color for {matches[2]} to {matches[3]}")</script><command /><packageName>DGRGUI</packageName><regex>^emco color (\w+) (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco color usage</name><script>local echo = demonnic.helpers.echo
 local validOptions = table.keys(demonnic.config)
 table.sort(validOptions)
 local validOptionsString = table.concat(validOptions, ", ")
@@ -271,7 +271,7 @@ echo("  * emco color activeColor #00ff00")
 echo("    * changes the color of the active tab to green")
 echo()
 echo("Valid options are " .. validOptionsString)
-echo("Remember to use 'emco save' to make your changes permanent, or 'emco load' to undo them and reset back to what you previously saved.")</script><command /><packageName>EMCOChat</packageName><regex>^emco color$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco usage</name><script>local echo = demonnic.helpers.echo
+echo("Remember to use 'emco save' to make your changes permanent, or 'emco load' to undo them and reset back to what you previously saved.")</script><command /><packageName>DGRGUI</packageName><regex>^emco color$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco usage</name><script>local echo = demonnic.helpers.echo
 local aliases = {
   ["emco save"] = "saves your config to disk",
   ["emco load"] = "loads your config from disk",
@@ -298,9 +298,9 @@ for name, desc in spairs(aliases) do
   echo(f"* {name}")
   echo(f"  * {desc}")
 end
-</script><command /><packageName>EMCOChat</packageName><regex>^emco( usage)?$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco update</name><script>uninstallPackage("EMCOChat")
-installPackage("https://github.com/demonnic/EMCO/releases/latest/download/EMCOChat.mpackage")</script><command /><packageName>EMCOChat</packageName><regex>^emco update$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco title</name><script>local title = matches[2]
+</script><command /><packageName>DGRGUI</packageName><regex>^emco( usage)?$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco update</name><script>uninstallPackage("DGRGUI")
+installPackage("https://github.com/demonnic/EMCO/releases/latest/download/DGRGUI.mpackage")</script><command /><packageName>DGRGUI</packageName><regex>^emco update$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco title</name><script>local title = matches[2]
 if title == "clear" then
   title = ""
 end
-demonnic.container:setTitle(title)</script><command /><packageName>EMCOChat</packageName><regex>^emco title (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco lock</name><script>demonnic.container:lockContainer()</script><command /><packageName>EMCOChat</packageName><regex>^emco lock$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco unlock</name><script>demonnic.container:unlockContainer()</script><command /><packageName>EMCOChat</packageName><regex>^emco unlock$</regex></Alias></AliasGroup></AliasPackage></MudletPackage>
+demonnic.container:setTitle(title)</script><command /><packageName>DGRGUI</packageName><regex>^emco title (.+)</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco lock</name><script>demonnic.container:lockContainer()</script><command /><packageName>DGRGUI</packageName><regex>^emco lock$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco unlock</name><script>demonnic.container:unlockContainer()</script><command /><packageName>DGRGUI</packageName><regex>^emco unlock$</regex></Alias></AliasGroup></AliasPackage></MudletPackage>

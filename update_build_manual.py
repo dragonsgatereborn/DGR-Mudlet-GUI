@@ -4,9 +4,9 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 base_dir = Path(__file__).resolve().parent
-xml_path = base_dir / "build_manual" / "EMCOChat.xml"
+xml_path = base_dir / "build_manual" / "DGRGUI.xml"
 
-pkg_name = "EMCOChat"
+pkg_name = "DGRGUI"
 
 src_alias_dir = base_dir / "src" / "aliases" / "EMCO"
 src_script_dir = base_dir / "src" / "scripts" / "EMCO"
@@ -46,7 +46,7 @@ root = ET.Element("MudletPackage", version="1.001")
 # ScriptPackage
 script_package = ET.SubElement(root, "ScriptPackage")
 script_group = ET.SubElement(script_package, "ScriptGroup", isActive="yes", isFolder="yes")
-add_text(script_group, "name", "EMCO")
+add_text(script_group, "name", "DGRGUI")
 add_text(script_group, "script")
 add_text(script_group, "packageName", pkg_name)
 add_text(script_group, "eventHandlerList")
@@ -57,7 +57,7 @@ add_script(script_group, "Code", code_script.replace("@PKGNAME@", pkg_name))
 # AliasPackage
 alias_package = ET.SubElement(root, "AliasPackage")
 alias_group = ET.SubElement(alias_package, "AliasGroup", isActive="yes", isFolder="yes")
-add_text(alias_group, "name", "EMCO")
+add_text(alias_group, "name", "DGRGUI")
 add_text(alias_group, "script")
 add_text(alias_group, "packageName", pkg_name)
 
@@ -75,4 +75,4 @@ xml_declaration = "<?xml version='1.0' encoding='utf-8'?>\n"
 xml_body = ET.tostring(root, encoding="unicode")
 xml_path.write_text(xml_declaration + xml_body, encoding="utf-8")
 
-print("Updated build_manual/EMCOChat.xml from src")
+print("Updated build_manual/DGRGUI.xml from src")

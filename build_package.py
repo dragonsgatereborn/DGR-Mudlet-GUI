@@ -5,9 +5,9 @@ from pathlib import Path
 
 base_dir = Path(__file__).resolve().parent
 build_dir = base_dir / "build_manual"
-output_file = base_dir / "EMCOChat.mpackage"
+output_file = base_dir / "DGRGUI.mpackage"
 
-print("Building EMCOChat.mpackage from build_manual...")
+print("Building DGRGUI.mpackage from build_manual...")
 if output_file.exists():
     output_file.unlink()
 
