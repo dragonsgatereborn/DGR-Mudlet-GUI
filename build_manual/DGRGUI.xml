@@ -8,10 +8,22 @@ EMCO scripts live in DGRGUI/EMCO.
 </script><command /><packageName>DGRGUI</packageName><eventHandlerList /></Script><Script isActive="yes" isFolder="no"><name>MainDisplay</name><script>DGRGUI = DGRGUI or {}
 
 local function getBackgroundPath()
-  local profile = getProfileName and getProfileName() or ""
   local base = getMudletHomeDir and getMudletHomeDir() or ""
-  if profile ~= "" and base ~= "" then
-    return base .. "/profiles/" .. profile .. "/DGRGUI/dgrgui_background.png"
+  local profilePath = nil
+  if getProfilePath then
+    profilePath = getProfilePath()
+  else
+    local profile = getProfileName and getProfileName() or ""
+    if base ~= "" and profile ~= "" then
+      if profile:match("^profiles/") then
+        profilePath = base .. "/" .. profile
+      else
+        profilePath = base .. "/profiles/" .. profile
+      end
+    end
+  end
+  if profilePath and profilePath ~= "" then
+    return profilePath .. "/DGRGUI/dgrgui_background.png"
   end
   return nil
 end
