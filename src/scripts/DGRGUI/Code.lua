@@ -10,8 +10,10 @@ local function safeDestroy(container)
 end
 
 function DGRGUI.start()
-  if setBorderLeft then setBorderLeft(300) end
-  if setBorderRight then setBorderRight(300) end
+  if setBorderLeft then setBorderLeft(500) end
+  if setBorderRight then setBorderRight(500) end
+  if setBorderTop then setBorderTop(300) end
+  if setBorderBottom then setBorderBottom(300) end
 end
 
 if registerAnonymousEventHandler then
@@ -19,8 +21,10 @@ if registerAnonymousEventHandler then
     killAnonymousEventHandler(DGRGUI._resizeHandler)
   end
   DGRGUI._resizeHandler = registerAnonymousEventHandler("sysWindowResizeEvent", function()
-    if setBorderLeft then setBorderLeft(300) end
-    if setBorderRight then setBorderRight(300) end
+    if setBorderLeft then setBorderLeft(500) end
+    if setBorderRight then setBorderRight(500) end
+    if setBorderTop then setBorderTop(300) end
+    if setBorderBottom then setBorderBottom(300) end
   end)
 end
 
