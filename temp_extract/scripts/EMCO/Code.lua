@@ -38,9 +38,6 @@ emco fontSize <size>
 emco tabFontSize <size>
   Sets the font size for the tabs (independent of console).
 
-emco addFontSize <size>
-  Alias for tabFontSize.
-
 emco color <option> <value>
   Changes colors for tabs and backgrounds.
   Use 'emco color' by itself to see available options.
@@ -97,11 +94,8 @@ emco version
 emco update
   (Re)installs or updates to the latest EMCO package version.
 
-emco restart
-  Restarts the EMCO chat window and reloads defaults.
-
 --------------------------------------------------------
-USAGE IN CODE
+ USAGE IN CODE
 --------------------------------------------------------
 To copy lines from triggers to a tab:
   demonnic.chat:append("TabName")
@@ -165,7 +159,7 @@ function demonnic.helpers.resetToDefaults()
     y = 0,
     height = "100%",
     width = "100%",
-    consoles = {"All", "Program", "OOC", "RP", "Whisper", "Group", "Game"},
+    consoles = {"All", "Local", "City", "OOC", "Tells", "Group"},
     allTab = true,
     allTabName = "All",
     blankLine = true,
@@ -173,8 +167,7 @@ function demonnic.helpers.resetToDefaults()
     bufferSize = 10000,
     deleteLines = 500,
     timestamp = true,
-    fontSize = 14,
-    tabFontSize = 16,
+    fontSize = 12,
     font = "Ubuntu Mono",
     consoleColor = demonnic.config.background,
     activeTabCSS = activeStyle:getCSS(),

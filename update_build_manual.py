@@ -65,12 +65,10 @@ add_text(script_group, "script")
 add_text(script_group, "packageName", pkg_name)
 add_text(script_group, "eventHandlerList")
 
-# Parent README script
 parent_readme = base_dir / "src" / "scripts" / "DGRGUI" / "README.lua"
 if parent_readme.exists():
     add_script(script_group, "README", parent_readme.read_text(encoding="utf-8"))
 
-# EMCO child group
 emco_group = ET.SubElement(script_group, "ScriptGroup", isActive="yes", isFolder="yes")
 add_text(emco_group, "name", "EMCO")
 add_text(emco_group, "script")

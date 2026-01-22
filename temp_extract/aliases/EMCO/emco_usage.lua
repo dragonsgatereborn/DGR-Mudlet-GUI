@@ -6,7 +6,6 @@ local aliases = {
   ["emco remtab <tabname>"] = "removes a tab from your EMCO",
   ["emco fontSize"] = "set the font size for the consoles",
   ["emco tabFontSize"] = "set the font size for the tabs",
-  ["emco addFontSize"] = "alias for tabFontSize",
   ["emco font"] = "set the font to use for the consoles",
   ["emco blink <true|false>"] = "turn blinking on/off",
   ["emco blankLine <true|false>"] = "turn inserting a blank line between messages on/off",
@@ -21,7 +20,6 @@ local aliases = {
   ["emco color <option> <value>"] = "used to change the colors for the active/inactive tab, and the background color for the consoles. 'emco color' with no options will print out available options",
   ["emco version"] = "display the current EMCO version and repository information",
   ["emco update"] = "(re)install the latest version of the package",
-  ["emco restart"] = "restart the EMCO chat window and reload defaults",
 }
 
 echo("\nAvailable aliases for the prebuilt EMCO package")
