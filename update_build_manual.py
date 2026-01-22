@@ -69,6 +69,17 @@ parent_readme = base_dir / "src" / "scripts" / "DGRGUI" / "README.lua"
 if parent_readme.exists():
     add_script(script_group, "README", parent_readme.read_text(encoding="utf-8"))
 
+parent_scripts_json_path = base_dir / "src" / "scripts" / "DGRGUI" / "scripts.json"
+if parent_scripts_json_path.exists():
+    parent_scripts_json = json.loads(parent_scripts_json_path.read_text(encoding="utf-8"))
+    for entry in parent_scripts_json:
+        name = entry.get("name")
+        if not name or name == "README":
+            continue
+        script_path = base_dir / "src" / "scripts" / "DGRGUI" / f"{name}.lua"
+        if script_path.exists():
+            add_script(script_group, name, script_path.read_text(encoding="utf-8"))
+
 emco_group = ET.SubElement(script_group, "ScriptGroup", isActive="yes", isFolder="yes")
 add_text(emco_group, "name", "EMCO")
 add_text(emco_group, "script")
