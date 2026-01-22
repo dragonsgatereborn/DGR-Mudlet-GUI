@@ -120,7 +120,20 @@ Full API documentation:
 ]]--
 
 local defaultConfig = {activeColor = "black", inactiveColor = "black", activeBorder = "green", activeText = "green", inactiveText = "grey", background = "black", windowBorder = "green", title = "green"}
-local emco = require("@PKGNAME@.emco")
+local emco
+do
+  local ok, mod = pcall(require, "@PKGNAME@.emco")
+  if ok and mod then
+    emco = mod
+  else
+    ok, mod = pcall(require, "EMCOChat.emco")
+    if ok and mod then
+      emco = mod
+    else
+      emco = require("emco")
+    end
+  end
+end
 emco.cmdLineStyleSheet = nil
 demonnic = demonnic or {}
 demonnic.helpers = demonnic.helpers or {}
