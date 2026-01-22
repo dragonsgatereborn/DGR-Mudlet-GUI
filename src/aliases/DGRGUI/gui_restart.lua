@@ -6,6 +6,9 @@ local installComplete = false
 local function afterInstall()
   if installComplete then return end
   installComplete = true
+  if enablePackage then
+    enablePackage("@PKGNAME@")
+  end
   if reloadPackage then
     reloadPackage("@PKGNAME@")
   end
@@ -28,5 +31,7 @@ if registerAnonymousEventHandler then
 end
 
 uninstallPackage("@PKGNAME@")
-installPackage(packageUrl)
-tempTimer(2, afterInstall)
+tempTimer(0.5, function()
+  installPackage(packageUrl)
+end)
+tempTimer(3, afterInstall)
