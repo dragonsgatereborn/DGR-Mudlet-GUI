@@ -106,7 +106,7 @@ end)
 tempTimer(3, afterInstall)
 </script><command /><packageName>DGRGUI</packageName><regex>^gui install$</regex></Alias><Alias isActive="yes" isFolder="no"><name>gui uninstall</name><script>cecho("&lt;green&gt;DGR GUI: &lt;reset&gt;Uninstalling package...\n")
 uninstallPackage("DGRGUI")
-</script><command /><packageName>DGRGUI</packageName><regex>^gui uninstall$</regex></Alias><Alias isActive="yes" isFolder="no"><name>gui update</name><script>local currentVersion = "0.2.7"
+</script><command /><packageName>DGRGUI</packageName><regex>^gui uninstall$</regex></Alias><Alias isActive="yes" isFolder="no"><name>gui update</name><script>local currentVersion = "0.2.8"
 local repoUrl = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
 local packageUrl = repoUrl .. "/releases/latest/download/DGRGUI.mpackage"
 
@@ -185,7 +185,7 @@ tempTimer(0.5, function()
   installPackage(packageUrl)
 end)
 tempTimer(3, afterInstall)
-</script><command /><packageName>DGRGUI</packageName><regex>^gui restart$</regex></Alias><Alias isActive="yes" isFolder="no"><name>gui version</name><script>local version = "0.2.7"
+</script><command /><packageName>DGRGUI</packageName><regex>^gui restart$</regex></Alias><Alias isActive="yes" isFolder="no"><name>gui version</name><script>local version = "0.2.8"
 local repo = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
 
 cecho("&lt;green&gt;DGR GUI\n")
@@ -382,12 +382,31 @@ for name, desc in spairs(aliases) do
 end
 </script><command /><packageName>DGRGUI</packageName><regex>^emco( usage)?$</regex></Alias><Alias isActive="yes" isFolder="no"><name>emco update</name><script>local currentVersion = "2.15.16"
 local repoUrl = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
-local apiUrl = "https://api.github.com/repos/dragonsgatereborn/EMCO/releases/latest"
+local apiUrl = "https://api.github.com/repos/dragonsgatereborn/DGR-Mudlet-GUI/releases/latest"
 local packageUrl = repoUrl .. "/releases/latest/download/DGRGUI.mpackage"
 
-local function installLatest(latestTag)
+local function afterInstall()
+  if enablePackage then
+    enablePackage("DGRGUI")
+  end
+  if reloadPackage then
+    reloadPackage("DGRGUI")
+  end
+  if DGRGUI and DGRGUI.start then
+    DGRGUI.start()
+  end
+end
+
+local function scheduleInstall()
   uninstallPackage("DGRGUI")
-  installPackage(packageUrl)
+  tempTimer(0.5, function()
+    installPackage(packageUrl)
+  end)
+  tempTimer(3, afterInstall)
+end
+
+local function installLatest(latestTag)
+  scheduleInstall()
   cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Update complete! Package installed from:\n")
   cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;" .. packageUrl .. "\n")
 end
@@ -395,6 +414,16 @@ end
 cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Current version: " .. currentVersion .. "\n")
 cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Updating from " .. repoUrl .. "\n")
 cecho("&lt;green&gt;EMCO Chat: &lt;reset&gt;Fetching latest version...\n")
+
+if registerAnonymousEventHandler then
+  local handler
+  handler = registerAnonymousEventHandler("sysInstall", function(_, pkg)
+    if pkg == "DGRGUI" then
+      killAnonymousEventHandler(handler)
+      tempTimer(0.5, afterInstall)
+    end
+  end)
+end
 
 if getHTTP then
   local completed = false

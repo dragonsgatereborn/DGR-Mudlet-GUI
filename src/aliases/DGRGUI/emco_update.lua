@@ -1,11 +1,30 @@
 local currentVersion = "2.15.16"
 local repoUrl = "https://github.com/dragonsgatereborn/DGR-Mudlet-GUI"
-local apiUrl = "https://api.github.com/repos/dragonsgatereborn/EMCO/releases/latest"
+local apiUrl = "https://api.github.com/repos/dragonsgatereborn/DGR-Mudlet-GUI/releases/latest"
 local packageUrl = repoUrl .. "/releases/latest/download/@PKGNAME@.mpackage"
 
-local function installLatest(latestTag)
+local function afterInstall()
+  if enablePackage then
+    enablePackage("@PKGNAME@")
+  end
+  if reloadPackage then
+    reloadPackage("@PKGNAME@")
+  end
+  if DGRGUI and DGRGUI.start then
+    DGRGUI.start()
+  end
+end
+
+local function scheduleInstall()
   uninstallPackage("@PKGNAME@")
-  installPackage(packageUrl)
+  tempTimer(0.5, function()
+    installPackage(packageUrl)
+  end)
+  tempTimer(3, afterInstall)
+end
+
+local function installLatest(latestTag)
+  scheduleInstall()
   cecho("<green>EMCO Chat: <reset>Update complete! Package installed from:\n")
   cecho("<green>EMCO Chat: <reset>" .. packageUrl .. "\n")
 end
@@ -13,6 +32,16 @@ end
 cecho("<green>EMCO Chat: <reset>Current version: " .. currentVersion .. "\n")
 cecho("<green>EMCO Chat: <reset>Updating from " .. repoUrl .. "\n")
 cecho("<green>EMCO Chat: <reset>Fetching latest version...\n")
+
+if registerAnonymousEventHandler then
+  local handler
+  handler = registerAnonymousEventHandler("sysInstall", function(_, pkg)
+    if pkg == "@PKGNAME@" then
+      killAnonymousEventHandler(handler)
+      tempTimer(0.5, afterInstall)
+    end
+  end)
+end
 
 if getHTTP then
   local completed = false
