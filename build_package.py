@@ -4,10 +4,10 @@ import zipfile
 from pathlib import Path
 
 base_dir = Path(__file__).resolve().parent
-build_dir = base_dir / "build_manual"
-output_file = base_dir / "DGRGUI.mpackage"
+build_dir = base_dir / "build_bg"
+output_file = base_dir / "DGRGUI_BG.mpackage"
 
-print("Building DGRGUI.mpackage from build_manual...")
+print("Building DGRGUI_BG.mpackage from build_bg...")
 if output_file.exists():
     output_file.unlink()
 

@@ -1,9 +1,0 @@
-[
-  {"name": "All", "regex": "^\\[ALL\\].*"},
-  {"name": "Program", "regex": "^\\[PROGRAM\\].*"},
-  {"name": "OOC", "regex": "^\\[OOC\\].*"},
-  {"name": "RP", "regex": "^\\[RP\\].*"},
-  {"name": "Whisper", "regex": "^\\[WHISPER\\].*"},
-  {"name": "Group", "regex": "^\\[GROUP\\].*"},
-  {"name": "Game", "regex": "^\\[GAME\\].*"}
-]
